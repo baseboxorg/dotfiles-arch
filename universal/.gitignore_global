@@ -1,0 +1,10 @@
+# I use https://www.gitignore.io/ for all git repos,
+# so this file doesn't really mean much.
+
+*.o
+*.so
+*.pyc
+
+*.log
+*.sql
+*.sqlite

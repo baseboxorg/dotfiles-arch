@@ -1,0 +1,153 @@
+# Helper function to enforce argc and display provided usage string when violated.
+# USAGE: "_require $# 3 "$0 [ARGS]" || return 1" means the function needs exactly 3 arguments.
+_require () {
+    if [[ "$1" -ne "$2" ]]; then
+        echo "USAGE: $3" && return 1
+    fi
+}
+
+##### BASIC #####
+
+# print 16-color palette.
+palette () {
+    (x=`tput op` y=`printf %76s`;for i in {0..15};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done)
+}
+
+
+# mkdir and cd in one command.
+alias mc='mkcd'
+mkcd () {
+    _require $# 1 "$0 [path/to/newdir]" || return 1
+    if [[ -d "$1" ]]; then
+        echo "${1} already exists."
+    else
+        mkdir -p "$1" && cd "$1"
+    fi
+}
+
+
+# auto-ls after cd. Does not show hidden files.
+cd () {
+    if [[ -n "$1" ]]; then
+        builtin cd "$1" && l
+    else
+        builtin cd "$HOME" && l
+    fi
+}
+
+
+# help shortcut so I don't have to type --help.
+alias h='help'
+help () {
+    _require $# 1 "$0 [command]" || return 1
+    "$1" --help |& less  # bash 4.0+ shorthand for 2>&1 through a pipe
+}
+
+
+# quick name-based find shortcut.
+f () {
+    _require $# 1 "$0 [file or dir name]" || return 1
+    find . -iname "*$1*"
+}
+
+
+# permission cleanup for the current directory.
+pclean () {
+    sudo find . -type d -exec chmod 775 {} \;
+    sudo find . -type f -executable -exec chmod 775 {} \;
+    sudo find . -type f -not -executable -exec chmod 664 {} \;
+}
+
+
+# enforce permissions and ownership on important files.
+lockdown () {
+    sudo chown -R "$(whoami)" "${HOME}/."{ssh,gnupg}
+    sudo chmod 700 "${HOME}/."{ssh,gnupg}
+    sudo chmod 600 -R "${HOME}/.gnupg/"*
+    sudo chmod 700 "${HOME}/.gnupg/private-keys-v1.d"
+    sudo chmod 600 -R "${HOME}/.ssh/"*
+    sudo chmod 400 -R "${HOME}/.ssh/"*.pem
+    sudo chmod 400 "${HOME}/.ssh/id_rsa"*
+}
+
+
+# archive extraction based on file extension.
+alias e='extract'
+extract () {
+    _require $# 1 "$0 [path/to/archive]" || return 1
+    if [ -f "$1" ] ; then
+        case $1 in
+            *.tar.gz)    tar xvzf "$1"    ;;
+            *.tgz)       tar xvzf "$1"    ;;
+            *.tar.bz2)   tar xvjf "$1"    ;;
+            *.tbz2)      tar xvjf "$1"    ;;
+            *.tar)       tar xvf "$1"     ;;
+            *.bz2)       bunzip2 "$1"     ;;
+            *.gz)        gunzip "$1"      ;;
+            *.zip)       unzip "$1"       ;;
+            *.rar)       rar x "$1"       ;;
+            *.7z)        7z x "$1"        ;;
+            *)           echo "Can't recognize file extension on '$1'" ;;
+        esac
+    else
+        echo "'$1' is not a valid file!"
+    fi
+}
+
+
+# quick targz shortcut for one directory.
+# creates the archive in the target dir's location, with dashes subbed for spaces.
+# deletes source files if successful.
+archive () {
+    _require $# 1 "$0 [path/to/dir]" || return 1
+    ARCHIVE="$(echo ""$(dirname "$1")"/"$(basename "$1")".tgz" | tr ' ' '-')"
+    tar cvfz "$ARCHIVE" "$1" --remove-files
+}
+
+
+# kills the specified tty.
+killtty() {
+    _require $# 1 "$0 [tty number]" || return 1
+    sudo kill "$(who -u | grep "tty${1}" | tr -s ' ' | cut -d ' ' -f 6)"
+}
+
+
+##### BACKUP #####
+
+# unlocks LUKS-encrypted drives and mounts at /tmp/ALIAS.
+unlock () {
+    _require $# 2 "$0 [path/to/device] [mapper alias]" || return 1
+    MOUNTPOINT="/tmp/${2}"
+    if ! mkdir "$MOUNTPOINT"; then
+        echo "Choose a different /dev/mapper/ alias."
+        return 1
+    fi
+    sudo cryptsetup luksOpen "$1" "$2"
+    sudo mount "/dev/mapper/${2}" "$MOUNTPOINT" && cd "$MOUNTPOINT"
+}
+
+
+# unmounts from /tmp/ALIAS and locks LUKS-encrypted drives.
+lock () {
+    _require $# 1 "$0 [MAPPER ALIAS]" || return 1
+    builtin cd "$HOME"
+    sudo umount "/tmp/${1}"
+    sudo cryptsetup luksClose "$1" && rmdir "/tmp/${1}"
+    echo "Remember to power off! udisksctl power-off -b [block]"
+}
+
+
+# rsync flag wrapper for backup and sync.
+rmirror () {
+    _require $# 2 "$0 [/path/to/source/dir] [/path/to/dest/dir]" || return 1
+    rsync -ahP --delete "$1" "$2"  # reflect deleted file changes in the destination
+}
+
+
+##### DEV WORKFLOW #####
+
+# Create a python virtualenv in the current dir.
+venv () {
+    _require $# 1 "$0 [path/to/python/interpreter]" || return 1
+    virtualenv -v -p "$1" ./venv
+}

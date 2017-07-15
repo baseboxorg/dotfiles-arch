@@ -1,0 +1,86 @@
+super + Escape
+    pkill -USR1 -x sxhkd
+    notify-send "sxhkd config reloaded"
+
+#
+# SHORTCUTS
+#
+
+ctrl + Return
+    urxvt
+
+super + Return
+    urxvtc -e "ranger"
+
+ctrl + shift + l
+    lock-screen
+
+# TODO possible to lock and then suspend?
+ctrl + alt + Delete
+    systemctl suspend
+
+shift + Return
+    rofi -show run
+
+ctrl + shift + Return
+    rofi -show window
+
+ctrl + alt + Return
+    rofi -show ssh
+
+super + w
+    wal-set
+
+Print
+    notify-send "sxiv screenshot TODO"
+    # TODO screenshot
+
+XF86Audio{LowerVolume,RaiseVolume}
+    pactl set-sink-volume 0 {-5%,+5%}
+
+XF86AudioMute
+    pactl set-sink-mute 0 toggle
+
+XF86MonBrightness{Down,Up}
+    xbacklight -{dec,inc} 10
+
+super + F8
+    urxvtc -e "htop"
+
+#
+# BPSWM
+#
+
+# close or kill
+super + {c,k}
+    bspc node -{c,k}
+
+# toggle tiled / monocle layout
+super + m
+    bspc desktop -l next
+
+# focus or swap (shift) node in the given direction
+super + {_,shift + }{h,j,k,l}
+    bspc node -{f,s} {west,south,north,east}
+
+# focus the older or newer node in the focus history
+super + {o,i}
+    bspc wm -h off; \
+    bspc node {older,newer} -f; \
+    bspc wm -h on
+
+# focus or send to the given desktop
+alt + {_,shift + }{1-9,0}
+    bspc {desktop -f,node -d} '^{1-9,10}'
+
+# expand a window by moving one of its side outward
+super + alt + {h,j,k,l}
+    bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# contract a window by moving one of its side inward
+super + alt + shift + {h,j,k,l}
+    bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# window gap via mouse wheel
+super + button{4,5}
+    bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+,-} 5))

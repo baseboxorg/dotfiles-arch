@@ -1,0 +1,13 @@
+URxvt.url-launcher: /usr/sbin/chromium
+URxvt.scrollBar: false
+URxvt.letterSpace: -1
+URxvt.internalBorder: 25
+URxvt.font: xft:Hack:size=11
+
+! disable ctrl-shift
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
+! true transparency
+! URxvt.depth: 32
+! URxvt.background: rgba:0000/0000/0000/ff00

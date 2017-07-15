@@ -1,0 +1,82 @@
+# Custom aliases across all shells.
+
+alias ag='ag --path-to-agignore ${HOME}/.agignore'
+alias gpg='gpg2'
+alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias serve='python3 -m http.server 8888'
+alias sitemirror='wget -mkKE -e robots=off'
+alias ytmp3='youtube-dl -x --audio-format mp3 --audio-quality 0'
+
+alias ls='ls -F --color=always'
+alias l='ls -lph'
+alias ll='ls -Alph'
+alias llt='ll -rt'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+alias c='clear'
+alias flatten='find . -type f -exec mv {} . \; && find . -type d -empty -delete'
+alias less='less -irS'
+alias pls='sudo !!'
+alias po='popd'
+alias pu='pushd'
+alias q='exit'
+alias rip='rm -rf'
+alias rmd='rmdir'
+alias tail='tail -f -n 25'
+
+alias df='df --exclude-type=tmpfs -h'
+alias dmesg='dmesg -xHw'
+alias dusk='sudo du -skh .??* * | sort -rh'
+alias lsblk='lsblk --output=NAME,TYPE,FSTYPE,LABEL,PARTLABEL,SIZE,UUID,MOUNTPOINT'
+alias lsusb='lsusb -t'
+
+# Fancier git aliases are in .gitconfig.
+# These are some common ones so I don't have to type the space in between.
+alias g='git'
+alias ga='g add'
+alias gaa='ga --all'
+alias gb='g branch -vv'
+alias gbv='g branch -vv --all'
+alias gc='g clone --recursive'
+alias gch='g checkout'
+alias gchb='g checkout -b'
+alias gchm='g checkout master'
+alias gcm='g commit -S -m'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gf='fetch --tags --prune'
+alias gfa='fetch --all --tags --prune'
+alias gl="g log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias gp='g push'
+alias gpf='gp --force'
+alias gpom='gp -u origin master'
+alias gpomf='gp -u origin master --force'
+gr () {
+    git reset HEAD~"$1"
+}
+alias grsu='g remote set-url'
+alias grsuo='grsu origin'
+alias grv='g remote -v'
+alias gs='g status -sb'
+alias gst='g stash'
+alias gsta='g stash apply'
+alias gt='g tag -s'
+alias gu='g submodule update --init --recursive --remote'
+
+alias p3='python3'
+alias pipi='p3 -m pip install --user'
+alias pipu='p3 -m pip uninstall'
+alias venva='source ./venv/bin/activate'
+alias venvd='deactivate'
+
+# TODO node stuff when I actually get to learning it
+
+alias tn='tmux new-session -s'
+alias ta='tmux attach -t'
+alias tad='tmux attach -d -t'
+alias tkss='tmux kill-session -t'
+alias tkill='tmux kill-server'
+alias tl='tmux list-sessions'

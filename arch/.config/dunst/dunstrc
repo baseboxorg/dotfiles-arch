@@ -1,0 +1,25 @@
+[global]
+    font = "Hack"
+    allow_markup = yes
+    format = "<b>* %s</b>"
+    sort = yes
+    alignment = left
+    word_wrap = yes
+    ignore_newline = no
+    geometry = "300x25-30+40"
+    monitor = 0
+    follow = mouse
+    sticky_history = yes
+    history_length = 10
+    line_height = 0
+    separator_height = 4
+    padding = 4
+    horizontal_padding = 4
+    separator_color = auto
+    startup_notification = false
+    show_indicators = yes
+    browser = /usr/bin/chromium
+
+[shortcuts]
+    close = ctrl+space
+    close_all = ctrl+shift+space

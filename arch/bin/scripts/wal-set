@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+# default behavior is to bring up a new random wallpaper.
+# wal-set --useprev will attempt to persist cached colors,
+# which is useful in .xinitrc.
+
+notify-send "wal-set: init" -t 1
+
+WALLP="${HOME}/Wallpapers/"
+
+if [[ "$1" == "--useprev" ]] && \
+   [[ -f "${HOME}/.cache/wal/wal" ]]; then
+    WALLP="$(< "${HOME}/.cache/wal/wal")"
+fi
+
+wal -xi "$WALLP"
+. "${HOME}/.cache/wal/colors.sh"
+
+pkill dunst
+dunst \
+    -lb "$color0"  \
+    -nb "$color0"  \
+    -cb "$color0"  \
+    -lf "$color15" \
+    -bf "$color15" \
+    -cf "$color15" \
+    -nf "$color15" &
+
+pkill polybar
+polybar top &
+polybar bottom &
+
+bspc config focused_border_color "$color5"
+bspc config normal_border_color "$color0"
+
+notify-send "wal-set: done" -t 1

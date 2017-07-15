@@ -1,0 +1,23 @@
+alias acs='apt-cache search'
+alias sag='sudo apt-get'
+alias apta='sudo apt-add-repository'
+alias apti='sag install'
+alias aptr='sag remove'
+alias aptp='sag purge'
+alias aptu='sag update'
+alias aptupg='sag dist-upgrade'
+alias aptuu='aptupdate && aptupgrade'
+alias aptc='sag autoclean && sag clean && sag autoremove'
+
+
+# use ADB to back up a connected android phone.
+# must be REQ_VERSION in order for the backup to work because some adb versions have different syntax.
+phonebackup () {
+    REQ_VERSION="Android Debug Bridge version 1.0.32\nRevision debian"
+    if cmp <(adb version) <(echo -e "$REQ_VERSION"); then
+        BACKUP_PATH="${HOME}/phone-backup-"$(date '+%Y-%m-%d-%H-%M-%S')".ab"
+        adb backup -apk -obb -shared -all -f "$BACKUP_PATH"
+    else
+        echo -e "adb version must be:\n${REQ_VERSION}"
+    fi
+}

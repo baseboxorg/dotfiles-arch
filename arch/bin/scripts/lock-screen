@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+TMP="$(mktemp -d)"
+SCRN="${TMP}/screen.png"
+
+cleanup () {
+    rm -rf "$TMP"
+}
+
+trap cleanup EXIT
+
+scrot "$SCRN"
+convert "$SCRN" -scale 10% -scale 1000% "$SCRN"
+
+# convert "$SCRN" "PATH/TO/ICON.PNG" -gravity center -composite -matte "$SCRN"
+
+i3lock -u -i "$SCRN"
