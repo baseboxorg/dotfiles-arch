@@ -24,6 +24,7 @@ PACAUR_BASICS=(\
     stow
     the_silver_searcher
     tmux
+    trash-cli
     ufw
     vim
     wget
