@@ -1,10 +1,13 @@
 #!/bin/bash
 
 HERE="$(dirname "$(readlink -f "$0")")"
+TMP="$(mktemp -d)"
 
-# NOTE: This software install script assumes...
-# base-devel, pacaur, git, zsh already installed,
-# and that zsh is the login shell of the user.
+cleanup () {
+    rm -rf "$TMP"
+}
+
+trap cleanup EXIT
 
 PACAUR_BASICS=(\
     cryptsetup
@@ -27,7 +30,6 @@ PACAUR_BASICS=(\
     trash-cli
     ufw
     vim
-    wget
     xclip
     youtube-dl\
 )
@@ -106,6 +108,22 @@ notify() {
     echo -e "\n${CYANBOLD}[!] ${1}${NOCOLOR}\n"
 }
 
+# Automatically install pacaur.
+set -x
+sudo pacman --noconfirm -Sy base-devel cmake git wget gnupg
+
+cd "$TMP"
+mkdir cower && cd cower
+gpg2 --recv-keys 1EB2638FF56C0C53
+curl "https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=cower" -o PKGBUILD
+. "/etc/profile.d/perlbin.sh"
+makepkg -si
+
+cd "$TMP"
+mkdir pacaur && cd pacaur
+curl https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=pacaur -o PKGBUILD
+makepkg -si
+
 cd "$HERE"
 git submodule update --recursive --remote
 mkdir -p "${HOME}/bin"
@@ -113,6 +131,7 @@ mkdir -p "${HOME}/bin"
 notify "Refreshing current install..."
 sudo pacman-key --refresh-keys
 pacaur --noedit --noconfirm -Syu
+set +x
 
 notify "Installing new software..."
 pacaur --noedit --noconfirm -S "${PACAUR_BASICS[@]}"
