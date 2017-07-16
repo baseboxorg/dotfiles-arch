@@ -140,20 +140,29 @@ lock () {
 # rsync flag wrapper for backup and sync.
 rmirror () {
     _require $# 2 "$0 [/path/to/source/dir] [/path/to/dest/dir]" || return 1
-    rsync -ahP --delete "$1" "$2"  # reflect deleted file changes in the destination
+    rsync -aAXhP --delete "$1" "$2"  # reflect deleted file changes in the destination
 }
 
 
-# special rsync shortcut for home.
+# special rsync shortcut for home backups.
 hmirror () {
     _require $# 1 "$0 [/path/to/backup/dir]" || return 1
-    rsync -ahP --delete \
+    rsync -aAXhP --delete \
         --exclude '.cache' \
         --exclude '.gnupg' \
         --exclude '.ssh' \
         --exclude 'bigmedia' \
         "$HOME" "$1"
     # bigmedia is where isos, scraped music, torrent downloads, etc. are stored
+}
+
+
+# special rsync shortcut for system backups.
+smirror () {
+    _require $# 1 "$0 [/path/to/backup/dir]" || return 1
+    sudo rsync -aAXhP --delete \
+        --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/home/*","/lost+found"} \
+        "/" "$1"
 }
 
 
