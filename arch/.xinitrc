@@ -3,6 +3,7 @@
 sxhkd &
 redshift &
 compton --config ~/.config/compton/compton.conf -b &
+mpd &
 urxvtd -q -f -o
 
 # dunst + polybar are kicked off in wal-set.

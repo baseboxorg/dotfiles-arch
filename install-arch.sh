@@ -37,12 +37,13 @@ PACAUR_PYTHON=(\
 
 PACAUR_RICE=(\
     bspwm
-    cmus
     compton
     dunst
     i3lock
     maim
+    mpd
     mpv
+    ncmpcpp
     neofetch
     polybar
     redshift-minimal

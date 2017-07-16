@@ -21,38 +21,36 @@ foreground = ${colors.text}
 alert = #ff0000
 
 [bar/top]
-# bottom = true
+bottom = false
 wm-restack = bspwm
-
 width = 100%
 height = 28
 radius = 0
-fixed-center = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 font-0 = "monospace:size=10;2"
 font-1 = "FontAwesome:size=10;2"
 
-modules-left = bspwm separator xwindow
-modules-right = volume separator filesystem separator memory separator cpu separator temperature separator network separator date separator battery
+modules-left = bspwm
+modules-center = xwindow
+modules-right = network separator filesystem separator memory separator cpu separator temperature separator date separator battery
 tray-position =
 
 [bar/bottom]
 bottom = true
 wm-restack = bspwm
-
 width = 100%
-height = 27
+height = 25
 radius = 0
-fixed-center = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 font-0 = "monospace:size=10;2"
 font-1 = "FontAwesome:size=10;2"
 
-modules-center = separator
+modules-center = volume separator mpd
+tray-position = left
 
 
 [module/separator]
@@ -65,7 +63,7 @@ content-foreground = ${colors.lightpurplesubdued}
 type = internal/xwindow
 format-padding = 1
 label = %title%
-label-maxlen = 25
+label-maxlen = 50
 
 
 [module/bspwm]
@@ -102,28 +100,38 @@ label-mounted =  %percentage_used%%
 
 [module/mpd]
 type = internal/mpd
-format-padding = 1
 host = 127.0.0.1
 port = 6600
-format-online = <icon-prev><label-song><icon-next>
-format-online-padding = 1
+interval = 1
 
-label-song = %{A1:mpc toggle:}%artist% - %title%%{A}
-label-song-maxlen = 25
-label-song-ellipsis = true
-icon-play = 
-icon-pause = 
-icon-prev = 
-icon-next = 
+format-online = <icon-prev> <icon-seekb> <icon-stop> <toggle> <icon-seekf> <icon-next>  <icon-repeat> <icon-random>  <bar-progress> <label-time>  <label-song>
+format-playing = ${self.format-online}
+format-paused = ${self.format-online}
+format-stopped = ${self.format-online}
+format-offline = <label-offline>
 
-icon-prev-foreground = ${colors.primary}
-icon-next-foreground = ${colors.primary}
+label-song = %title%
+label-time = %elapsed% / %total%
+label-offline = 🎜 mpd offline
 
-icon-play-padding = 1
-icon-pause-padding = 1
-icon-prev-padding = 1
-icon-next-padding = 1
-label-song-padding = 1
+icon-play = ⏵
+icon-pause = ⏸
+icon-stop = ⏹
+icon-prev = ⏮
+icon-next = ⏭
+icon-seekb = ⏪
+icon-seekf = ⏩
+icon-random = 🔀
+icon-repeat = 🔁
+icon-repeatone = 🔂
+
+toggle-on-foreground = #ff
+toggle-off-foreground = #55
+
+bar-progress-width = 45
+bar-progress-indicator = |
+bar-progress-fill = ─
+bar-progress-empty = ─
 
 
 [module/cpu]
