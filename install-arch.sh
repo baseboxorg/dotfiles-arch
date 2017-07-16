@@ -18,6 +18,7 @@ PACAUR_BASICS=(\
     ncdu
     ngrok
     nvm
+    pass
     python3
     shellcheck
     stow
@@ -58,7 +59,10 @@ PACAUR_RICE=(\
 )
 
 PACAUR_OTHER=(\
-    keepassx2\
+    libreoffice-fresh
+    texlive-core
+    texlive-latexextra
+    texlive-fontsextra\
 )
 
 PACAUR_FONTS=(\
