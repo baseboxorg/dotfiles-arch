@@ -144,6 +144,19 @@ rmirror () {
 }
 
 
+# special rsync shortcut for home.
+hmirror () {
+    _require $# 1 "$0 [/path/to/backup/dir]" || return 1
+    rsync -ahP --delete \
+        --exclude '.cache' \
+        --exclude '.gnupg' \
+        --exclude '.ssh' \
+        --exclude 'bigmedia' \
+        "$HOME" "$1"
+    # bigmedia is where isos, scraped music, torrent downloads, etc. are stored
+}
+
+
 ##### DEV WORKFLOW #####
 
 # Create a python virtualenv in the current dir.

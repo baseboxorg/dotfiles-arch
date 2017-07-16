@@ -9,10 +9,12 @@ HERE="$(dirname "$(readlink -f "$0")")"
 PACAUR_BASICS=(\
     cryptsetup
     curl
+    dropbox
     ffmpeg
     gnupg2
     htop
     httpie
+    iptables
     ncdu
     ngrok
     nvm
@@ -21,6 +23,7 @@ PACAUR_BASICS=(\
     stow
     the_silver_searcher
     tmux
+    ufw
     vim
     wget
     xclip
