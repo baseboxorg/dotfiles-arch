@@ -9,17 +9,21 @@ cleanup () {
 
 trap cleanup EXIT
 
+CYANBOLD='\033[1;36m'
+NOCOLOR='\033[0m'
+
+notify() {
+    echo -e "\n${CYANBOLD}[!] ${1}${NOCOLOR}\n"
+}
+
 PACAUR_BASICS=(\
     cryptsetup
     curl
     dropbox
     ffmpeg
-    gnupg2
     htop
-    httpie
     iptables
     ncdu
-    ngrok
     nvm
     pass
     python3
@@ -30,7 +34,12 @@ PACAUR_BASICS=(\
     trash-cli
     ufw
     vim
-    xclip
+    xclip\
+)
+
+PACAUR_UTIL=(\
+    httpie
+    imgp
     youtube-dl\
 )
 
@@ -57,6 +66,7 @@ PACAUR_RICE=(\
     redshift-minimal
     rofi
     rxvt-unicode
+    scrot
     sxhkd
     sxiv
     wal-git\
@@ -102,16 +112,9 @@ PACAUR_FONTS=(\
 # irssi
 # rtorrent-git
 
-CYANBOLD='\033[1;36m'
-NOCOLOR='\033[0m'
-
-notify() {
-    echo -e "\n${CYANBOLD}[!] ${1}${NOCOLOR}\n"
-}
-
 # Automatically install pacaur.
 set -x
-sudo pacman --noconfirm -Sy base-devel cmake git wget gnupg
+sudo pacman --noconfirm -Sy base-devel cmake git wget gnupg2
 
 cd "$TMP"
 mkdir cower && cd cower
@@ -136,6 +139,7 @@ set +x
 
 notify "Installing new software..."
 pacaur --noedit --noconfirm -S "${PACAUR_BASICS[@]}"
+pacaur --noedit --noconfirm -S "${PACAUR_UTIL[@]}"
 pacaur --noedit --noconfirm -S "${PACAUR_PYTHON[@]}"
 pacaur --noedit --noconfirm -S "${PACAUR_RICE[@]}"
 pacaur --noedit --noconfirm -S "${PACAUR_OTHER[@]}"

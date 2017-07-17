@@ -6,7 +6,7 @@
 
 notify-send "[wal-set] init" -t 1
 
-WALLP="${HOME}/Wallpapers/"
+WALLP="${HOME}/Wallpapers/optimized-1920x1080"
 
 if [[ "$1" == "--useprev" ]] && \
    [[ -f "${HOME}/.cache/wal/wal" ]]; then
