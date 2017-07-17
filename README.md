@@ -15,9 +15,9 @@ There are three top-level dotfile directories:
 
 `git clone --recursive` this repository.
 
-For Debian-based environments, you'll want to `install-debian.sh && link.sh universal debian`.
+For Arch-based environments: `install-arch.sh && link.sh universal arch`.
 
-For Arch-based environments, you'll want to `install-arch.sh && link.sh universal arch`.
+For Debian-based environments: `install-debian.sh && link.sh universal debian`.
 
 To remove all symlinks to dotfiles set by GNU stow, simply `unlink.sh` with no arguments.
 
@@ -26,27 +26,27 @@ To remove all symlinks to dotfiles set by GNU stow, simply `unlink.sh` with no a
 Rice stack:
 
 ```
-bspwm           ➔ window manager
-cava            ➔ audio visualization (TODO)
-compton         ➔ display compositor
-dunst           ➔ notifications
-i3lock          ➔ screen lock
-irssi           ➔ IRC client (TODO)
-mpd + ncmpcpp   ➔ music (TODO)
-mpv             ➔ video player (TODO)
-neofetch        ➔ system information
-polybar         ➔ status bars
-ranger          ➔ file browser (TODO)
-redshift        ➔ screen filter
-rofi            ➔ launcher
-rtorrent        ➔ torrent client
-scrot, maim     ➔ screenshot
-sxhkd           ➔ keybindings
-sxiv            ➔ image viewer
-urxvt           ➔ terminal emulator
-wal             ➔ X colors (TODO pywal)
-zathura         ➔ document viewer (TODO)
-zsh             ➔ shell
+bspwm                       ➔ window manager
+cava                        ➔ audio visualization (TODO)
+compton                     ➔ display compositor
+dunst                       ➔ notifications
+i3lock                      ➔ screen lock
+irssi                       ➔ IRC client (TODO)
+mpd + ncmpcpp               ➔ music (TODO)
+mpv                         ➔ video player (TODO)
+neofetch                    ➔ system information
+polybar (+libmpdclient)     ➔ status bars
+ranger                      ➔ file browser (TODO)
+redshift                    ➔ screen filter
+rofi                        ➔ launcher
+rtorrent                    ➔ torrent client
+scrot, maim                 ➔ screenshot
+sxhkd                       ➔ keybindings
+sxiv                        ➔ image viewer
+urxvt                       ➔ terminal emulator
+wal                         ➔ X colors (TODO upgrade to pywal)
+zathura                     ➔ document viewer (TODO)
+zsh                         ➔ shell
 ```
 
 Dev stack:

@@ -47,12 +47,13 @@ PACAUR_RICE=(\
     compton
     dunst
     i3lock
+    libmpdclient
     maim
     mpd
     mpv
     ncmpcpp
     neofetch
-    polybar
+    polybar-git
     redshift-minimal
     rofi
     rxvt-unicode
