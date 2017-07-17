@@ -1,7 +1,7 @@
 [global]
     font = "Hack"
     allow_markup = yes
-    format = "<b>* %s</b>"
+    format = "<b>%s</b>"
     sort = yes
     alignment = left
     word_wrap = yes

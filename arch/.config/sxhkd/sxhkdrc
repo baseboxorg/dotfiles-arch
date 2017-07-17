@@ -1,6 +1,7 @@
 super + Escape
-    pkill -USR1 -x sxhkd
-    notify-send "sxhkd config reloaded"
+    pkill -USR1 -x sxhkd ;\
+    notify-send "[sxhkd] config reloaded" -t 1
+
 
 #
 # SHORTCUTS
@@ -36,16 +37,16 @@ Print
     # TODO screenshot
 
 XF86Audio{LowerVolume,RaiseVolume}
-    pactl set-sink-volume 0 {-5%,+5%}
+    amixer sset Master 5%{-,+}
 
 XF86AudioMute
-    pactl set-sink-mute 0 toggle
+    amixer sset Master 0%
+# how to toggle?
+
 
 XF86MonBrightness{Down,Up}
     xbacklight -{dec,inc} 10
 
-super + F8
-    urxvtc -e "htop"
 
 #
 # BPSWM

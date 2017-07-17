@@ -6,17 +6,16 @@ pid_file "~/.mpd/mpd.pid"
 state_file "~/.mpd/mpdstate"
 
 audio_output {
-    type "pulse"
-    name "pulse audio"
+    type "alsa"
+    name "HDA Intel HDMI"
 }
 
 audio_output {
     type "fifo"
-    name "josh_fifo"
+    name "FIFO"
     path "/tmp/mpd.fifo"
     format "44100:16:2"
 }
 
-user "josh"
 bind_to_address "127.0.0.1"
 port "6600"
