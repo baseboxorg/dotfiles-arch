@@ -18,7 +18,7 @@ There are three top-level dotfile directories:
 For Arch-based environments: `install-arch.sh && link.sh universal arch`
 For Debian-based environments: `install-debian.sh && link.sh universal debian`
 
-If `stow` encounters existing dotfiles while making symlinks, it will make backups suffixed with `.stow.bak`. 
+If `stow` encounters existing dotfiles while making symlinks, it will make backups suffixed with `.stow-bak`. 
 
 To remove all symlinks to dotfiles set by GNU stow, simply `unlink.sh` with no arguments. If there is an existing `.stow.bak` match, that file will be restored by removing the backup suffix.
 
