@@ -16,9 +16,8 @@ super + Return
 ctrl + shift + l
     lock-screen
 
-# TODO possible to lock and then suspend?
 ctrl + alt + Delete
-    systemctl suspend
+    lock-screen ; systemctl suspend
 
 shift + Return
     rofi -show run
@@ -33,16 +32,20 @@ super + w
     wal-set
 
 Print
-    notify-send "sxiv screenshot TODO"
-    # TODO screenshot
+    scrot '%Y-%m-%d-%H-%M-%S_$wx$h.png' --quality 100 \
+        -e 'mv $f ~/Screenshots && notify-send "Screenshot $f saved."'
+
+shift + Print
+    scrot -s '%Y-%m-%d-%H-%M-%S_$wx$h.png' --quality 100 \
+        -e 'mv $f ~/Screenshots && notify-send "Screenshot $f saved."'
 
 XF86Audio{LowerVolume,RaiseVolume}
-    amixer sset Master 5%{-,+}
+    pactl set-sink-volume 0 {-5%,+5%}
+    #amixer sset Master 5%{-,+}
 
 XF86AudioMute
-    amixer sset Master 0%
-# how to toggle?
-
+    pactl set-sink-mute 0 toggle
+    #amixer sset Master 0%
 
 XF86MonBrightness{Down,Up}
     xbacklight -{dec,inc} 10

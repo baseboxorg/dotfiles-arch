@@ -8,6 +8,4 @@ URxvt.font: xft:Hack:size=11
 URxvt.iso14755: false
 URxvt.iso14755_52: false
 
-! true transparency
-! URxvt.depth: 32
-! URxvt.background: rgba:0000/0000/0000/ff00
+! NOTE: depth and true transparency is set by wal -a in wal-set.

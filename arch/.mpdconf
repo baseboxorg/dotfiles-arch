@@ -5,9 +5,14 @@ log_file "~/.mpd/mpd.log"
 pid_file "~/.mpd/mpd.pid"
 state_file "~/.mpd/mpdstate"
 
+#audio_output {
+#    type "alsa"
+#    name "HDA Intel HDMI"
+#}
+
 audio_output {
-    type "alsa"
-    name "HDA Intel HDMI"
+    type "pulse"
+    name "pulse audio"
 }
 
 audio_output {

@@ -13,7 +13,9 @@ if [[ "$1" == "--useprev" ]] && \
     WALLP="$(< "${HOME}/.cache/wal/wal")"
 fi
 
-wal -xi "$WALLP"
+# The -a 75 sets urxvt transparency, assuming compton as the compositor!
+wal -xi "$WALLP" -a 75
+# TODO change to python-wal when -a equivalent is developed.
 
 # Setting the new colors for this subshell to configure
 # dunst, polybar and bspwm theming.
@@ -24,10 +26,10 @@ pkill dunst
 dunst \
     -lb "$color0"  \
     -nb "$color0"  \
-    -cb "$color0"  \
+    -cb "#ff0000"  \
     -lf "$color15" \
     -bf "$color15" \
-    -cf "$color15" \
+    -cf "#000000"  \
     -nf "$color15" &
 
 pkill polybar

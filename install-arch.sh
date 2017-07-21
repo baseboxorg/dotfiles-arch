@@ -74,6 +74,7 @@ PACAUR_RICE=(\
 
 PACAUR_OTHER=(\
     libreoffice-fresh
+    slack-desktop
     texlive-core
     texlive-latexextra
     texlive-fontsextra\
@@ -84,7 +85,7 @@ PACAUR_FONTS=(\
     adobe-source-han-sans-otc-fonts
     adobe-source-sans-pro-fonts
     adobe-source-serif-pro-fonts
-    bdf-unifont
+    ttf-unifont
     ttf-arphic-uming
     ttf-dejavu
     ttf-font-awesome

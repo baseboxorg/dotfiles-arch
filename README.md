@@ -5,21 +5,22 @@ My personal configuration for Arch and Debian-based development environments.
 
 There are three top-level dotfile directories:
 
-* `universal/` contains distribution-agnostic dotfiles and software configurations
-* `arch/` contains Arch-specific dotfiles (e.g. `bspwm` configuration)
-* `debian/` contains Debian-specific dotfiles (e.g. `apt` shell aliases)
+* `universal/`: distribution-agnostic dotfiles and software configurations
+* `arch/`: Arch-specific dotfiles (e.g. `bspwm` configuration)
+* `debian/`: Debian-specific dotfiles (e.g. `apt` shell aliases)
 
-`.commonrc` in `common/` will source `~/.specificrc` which will be present in both `arch/` and `debian/`. This file serves to store all the distribution-specific shell aliases, functions and environment exports.
+`universal/.commonrc` will source `~/.specificrc`, a file present in both `arch/` and `debian/`. This file stores all the distribution-specific shell aliases, functions and environment exports.
 
 ### Installation
 
-`git clone --recursive` this repository.
+`git clone --recursive git@github.com:JoshuaRLi/dotfiles.git`, then...
 
-For Arch-based environments: `install-arch.sh && link.sh universal arch`.
+For Arch-based environments: `install-arch.sh && link.sh universal arch`
+For Debian-based environments: `install-debian.sh && link.sh universal debian`
 
-For Debian-based environments: `install-debian.sh && link.sh universal debian`.
+If `stow` encounters existing dotfiles while making symlinks, it will make backups suffixed with `.stow.bak`. 
 
-To remove all symlinks to dotfiles set by GNU stow, simply `unlink.sh` with no arguments.
+To remove all symlinks to dotfiles set by GNU stow, simply `unlink.sh` with no arguments. If there is an existing `.stow.bak` match, that file will be restored by removing the backup suffix.
 
 ### Software Stack (Arch)
 
@@ -44,7 +45,7 @@ scrot, maim                 ➔ screenshot
 sxhkd                       ➔ keybindings
 sxiv                        ➔ image viewer
 urxvt                       ➔ terminal emulator
-wal                         ➔ X colors (TODO upgrade to pywal)
+wal                         ➔ color theming
 zathura                     ➔ document viewer (TODO)
 zsh                         ➔ shell
 ```

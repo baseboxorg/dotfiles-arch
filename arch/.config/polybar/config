@@ -5,7 +5,7 @@ bg2 = ${xrdb:color2}
 lbg2 = ${xrdb:color3}
 idk1 = ${xrdb:color4}
 idk2 = ${xrdb:color5}
-dik3 = ${xrdb:color6}
+idk3 = ${xrdb:color6}
 highlight = ${xrdb:color7}
 primary = ${xrdb:color8}
 warn = ${xrdb:color9}
@@ -18,7 +18,9 @@ text = ${xrdb:color15}
 
 background = ${colors.bg}
 foreground = ${colors.text}
-alert = #ff0000
+red = #ff0000
+yellow = #ffff00
+green = #00ff00
 
 [bar/top]
 bottom = false
@@ -29,41 +31,43 @@ radius = 0
 
 background = ${colors.background}
 foreground = ${colors.foreground}
-font-0 = "monospace:size=10;2"
+font-0 = "Hack:size=10;2"
 font-1 = "FontAwesome:size=10;2"
 
 modules-left = bspwm
 modules-center = xwindow
-modules-right = network separator filesystem separator memory separator cpu separator temperature separator date separator battery
+modules-right = network separator memory separator cpu separator temperature separator date
 tray-position =
+
 
 [bar/bottom]
 bottom = true
 wm-restack = bspwm
 width = 100%
-height = 25
+height = 28
 radius = 0
 
 background = ${colors.background}
 foreground = ${colors.foreground}
-font-0 = "monospace:size=10;2"
+font-0 = "Hack:size=10;2"
 font-1 = "FontAwesome:size=10;2"
 
-modules-center = volume separator mpd
 tray-position = left
+modules-center = mpd
+modules-right = volume separator filesystem separator battery
 
 
 [module/separator]
-type = custom/lightpurple
+type = custom/text
 content = |
-content-foreground = ${colors.lightpurplesubdued}
+content-foreground = ${colors.lbg2}
 
 
 [module/xwindow]
 type = internal/xwindow
-format-padding = 1
+
 label = %title%
-label-maxlen = 50
+label-maxlen = 60
 
 
 [module/bspwm]
@@ -85,70 +89,62 @@ label-occupied-padding = 1
 
 label-urgent = %index%!
 label-urgent-foreground = #ffffff
-label-urgent-background = ${colors.alert}
+label-urgent-background = ${colors.red}
 label-urgent-padding = 1
 
 
 [module/filesystem]
 type = internal/fs
+interval = 5
+fixed-values = true
+
 format-mounted = <label-mounted>
 format-mounted-padding = 1
-interval = 15
+
 mount-0 = /
-label-mounted =  %percentage_used%%
+label-mounted =  %used% / %total%
 
 
 [module/mpd]
 type = internal/mpd
 host = 127.0.0.1
 port = 6600
-interval = 1
+# Use this if I decide to display song progress.
+# interval = 1
 
-format-online = <icon-prev> <icon-seekb> <icon-stop> <toggle> <icon-seekf> <icon-next>  <icon-repeat> <icon-random>  <bar-progress> <label-time>  <label-song>
+format-online = <icon-prev> <label-song> <icon-next>
 format-playing = ${self.format-online}
 format-paused = ${self.format-online}
 format-stopped = ${self.format-online}
 format-offline = <label-offline>
 
 label-song = %title%
-label-time = %elapsed% / %total%
+# label-time = %elapsed% / %total%
 label-offline = 🎜 mpd offline
 
-icon-play = ⏵
-icon-pause = ⏸
-icon-stop = ⏹
-icon-prev = ⏮
-icon-next = ⏭
-icon-seekb = ⏪
-icon-seekf = ⏩
-icon-random = 🔀
-icon-repeat = 🔁
-icon-repeatone = 🔂
-
-toggle-on-foreground = #ff
-toggle-off-foreground = #55
-
-bar-progress-width = 45
-bar-progress-indicator = |
-bar-progress-fill = ─
-bar-progress-empty = ─
+icon-prev = <<
+icon-next = >>
 
 
 [module/cpu]
 type = internal/cpu
+interval = 2
+
 format = <label>
 format-padding = 1
 format-prefix = " "
-interval = 2
+
 label = %percentage%%
 
 
 [module/memory]
 type = internal/memory
+interval = 2
+
 format = <label>
 format-padding = 1
 format-prefix = " "
-interval = 2
+
 label = %percentage_used%%
 
 
@@ -157,30 +153,44 @@ type = internal/network
 interface = wlp2s0
 interval = 1
 
-format-connected = <label-connected>
+format-connected = <ramp-signal> <label-connected>
 format-connected-padding = 1
 format-disconnected = <label-disconnected>
 format-disconnected-padding = 1
-format-connected-prefix = " "
 format-disconnected-prefix = " "
 
-label-connected = %downspeed%
-label-disconnected = not connected
+label-connected = %essid%
+label-disconnected = disconnected
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-5 = 
 
 
 [module/date]
 type = internal/date
-format-padding = 1
-date =  %m/%d %H:%M:%S
 interval = 1
+
+format = <label>
+format-padding = 1
+
+date =  %m/%d %H:%M:%S
+label = %date%
+label-foreground = ${colors.foreground}
 
 
 [module/volume]
 type = internal/volume
 format-volume = <ramp-volume> <label-volume>
 format-volume-padding = 1
+format-muted = <ramp-volume> <label-muted>
+format-muted-padding = 1
 
-label-volume = %percentage%
+label-volume = %percentage%%
+label-muted = MUTED
 
 ramp-volume-0 = 
 ramp-volume-1 = 
@@ -200,18 +210,23 @@ format-charging-padding = 1
 format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-padding = 1
 format-full = <label-full>
+format-full-padding = 1
 
 label-charging = %percentage%%
 label-discharging = %percentage%%
-label-full =  %percentage%%
+label-full =  FULL
 
 ramp-capacity-0 = 
-ramp-capacity-0-foreground = ${colors.alert}
+ramp-capacity-0-foreground = ${colors.red}
 ramp-capacity-1 = 
-ramp-capacity-1-foreground = ${colors.alert}
+ramp-capacity-1-foreground = ${colors.red}
 ramp-capacity-2 = 
+ramp-capacity-2-foreground = ${colors.yellow}
 ramp-capacity-3 = 
+ramp-capacity-3-foreground = ${colors.green}
 ramp-capacity-4 = 
+ramp-capacity-4-foreground = ${colors.green}
+
 animation-charging-0 = 
 animation-charging-1 = 
 animation-charging-2 = 
@@ -223,18 +238,17 @@ animation-charging-framerate = 750
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
-lightcyan-temperature = 50
-interval = 2
+warn-temperature = 50
+interval = 1
 
 format = <ramp> <label>
 format-padding = 1
-format-lightcyan = <ramp> <label-lightcyan>
-format-lightcyan-padding = 1
-format-lightcyan-foreground = ${colors.alert}
-format-lightcyan-background = ${colors.background}
+format-warn = <ramp> <label-warn>
+format-warn-padding = 1
+format-warn-foreground = ${colors.red}
 
 label = %temperature%
-label-lightcyan = %temperature%
+label-warn = %temperature% !
 
 ramp-0 = 
 ramp-1 = 
