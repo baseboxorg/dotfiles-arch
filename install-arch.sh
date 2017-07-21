@@ -38,6 +38,7 @@ PACAUR_BASICS=(\
 )
 
 PACAUR_UTIL=(\
+    asciinema
     httpie
     imgp
     youtube-dl\

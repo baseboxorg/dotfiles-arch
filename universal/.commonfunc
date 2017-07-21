@@ -6,13 +6,6 @@ _require () {
     fi
 }
 
-##### BASIC #####
-
-# print 16-color palette.
-palette () {
-    (x=`tput op` y=`printf %76s`;for i in {0..15};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done)
-}
-
 
 # mkdir and cd in one command.
 alias mc='mkcd'
@@ -21,7 +14,7 @@ mkcd () {
     if [[ -d "$1" ]]; then
         echo "${1} already exists."
     else
-        mkdir -p "$1" && cd "$1"
+        mkdir -p "$1" && builtin cd "$1"
     fi
 }
 
@@ -166,10 +159,15 @@ smirror () {
 }
 
 
-##### DEV WORKFLOW #####
+# upload stdin or a file to pb.
+pb () {
+    curl -F "c=@${1:--}" -F p=1 https://ptpb.pw/
+}
 
-# Create a python virtualenv in the current dir.
-venv () {
-    _require $# 1 "$0 [path/to/python/interpreter]" || return 1
-    virtualenv -v -p "$1" ./venv
+
+# record and upload asciinema.
+pbs () {
+    asciinema rec /tmp/$$.json && \
+    pb /tmp/$$.json && \
+    echo "Prepend t/ to view the asciinema!"
 }
