@@ -32,9 +32,9 @@ cava                        ➔ audio visualization (TODO)
 compton                     ➔ display compositor
 dunst                       ➔ notifications
 i3lock                      ➔ screen lock
-irssi                       ➔ IRC client (TODO)
-mpd + ncmpcpp               ➔ music (TODO)
-mpv                         ➔ video player (TODO)
+irssi                       ➔ IRC client
+mpd + ncmpcpp               ➔ music
+mpv                         ➔ video player
 neofetch                    ➔ system information
 polybar (+libmpdclient)     ➔ status bars
 ranger                      ➔ file browser (TODO)

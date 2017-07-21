@@ -56,6 +56,7 @@ PACAUR_RICE=(\
     compton
     dunst
     i3lock
+    irssi
     libmpdclient
     maim
     mpd
@@ -73,6 +74,7 @@ PACAUR_RICE=(\
 )
 
 PACAUR_OTHER=(\
+    docker
     libreoffice-fresh
     slack-desktop
     texlive-core
@@ -105,18 +107,19 @@ PACAUR_FONTS=(\
 )
 
 # TODO
-# pywal
 # neovim
 # ranger
 # cava
 # zathura
-# irssi
 # rtorrent-git
 
-# Automatically install pacaur.
 set -x
+
+notify "Installing basics..."
 sudo pacman --noconfirm -Sy base-devel cmake git wget gnupg2
 
+# Automatically install pacaur: install cower.
+notify "Installing pacaur..."
 cd "$TMP"
 mkdir cower && cd cower
 gpg2 --recv-keys 1EB2638FF56C0C53
@@ -124,11 +127,13 @@ curl "https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=cower" -o PKGBUILD
 . "/etc/profile.d/perlbin.sh"
 makepkg -si
 
+# Automatically install pacaur: install pacaur.
 cd "$TMP"
 mkdir pacaur && cd pacaur
 curl https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=pacaur -o PKGBUILD
 makepkg -si
 
+notify "Updating submodules..."
 cd "$HERE"
 git submodule update --recursive --remote
 mkdir -p "${HOME}/bin"
@@ -136,6 +141,7 @@ mkdir -p "${HOME}/bin"
 notify "Refreshing current install..."
 sudo pacman-key --refresh-keys
 pacaur --noedit --noconfirm -Syu
+
 set +x
 
 notify "Installing new software..."
@@ -146,5 +152,5 @@ pacaur --noedit --noconfirm -S "${PACAUR_RICE[@]}"
 pacaur --noedit --noconfirm -S "${PACAUR_OTHER[@]}"
 pacaur --noedit --noconfirm -S "${PACAUR_FONTS[@]}"
 
-notify "Reloading zsh..."
+notify "Done! Reloading zsh..."
 exec zsh

@@ -4,3 +4,6 @@
 [submodule "zsh/oh-my-zsh"]
 	path = universal/.oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh
+[submodule "universal/bin/scripts"]
+	path = universal/bin/scripts
+	url = https://github.com/JoshuaRLi/scripts
