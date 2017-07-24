@@ -56,6 +56,7 @@ PACAUR_PYTHON=(\
 
 PACAUR_RICE=(\
     bspwm
+    cava
     compton
     dunst
     i3lock
@@ -113,7 +114,6 @@ PACAUR_FONTS=(\
 # TODO
 # neovim
 # ranger
-# cava
 # zathura
 # rtorrent-git
 

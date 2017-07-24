@@ -30,7 +30,7 @@ Rice stack:
 
 ```
 bspwm                       ➔ window manager
-cava                        ➔ audio visualization (TODO)
+cava                        ➔ audio visualization
 compton                     ➔ display compositor
 dunst                       ➔ notifications
 i3lock                      ➔ screen lock

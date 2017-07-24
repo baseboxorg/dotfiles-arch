@@ -17,6 +17,3 @@ bspc config focus_by_distance    true
 bspc config focus_follows_pointer true
 bspc config pointer_follows_focus false
 bspc config click_to_focus true
-
-#bspc rule -a Chromium desktop=^2
-#bspc rule -a URxvt:ranger floating=off desktop=^4
