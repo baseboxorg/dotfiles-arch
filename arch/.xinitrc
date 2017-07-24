@@ -3,7 +3,6 @@
 urxvtd -q -f -o &
 sxhkd &
 redshift &
-compton --config ~/.config/compton/compton.conf &
 mpd &
 dunst &
 polybar top &

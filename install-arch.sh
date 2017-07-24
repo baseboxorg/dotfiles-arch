@@ -78,6 +78,7 @@ PACAUR_RICE=(\
 
 PACAUR_OTHER=(\
     docker
+    easytag
     libreoffice-fresh
     slack-desktop
     texlive-core

@@ -22,6 +22,7 @@ red = #ff0000
 yellow = #ffff00
 green = #00ff00
 
+
 [bar/top]
 bottom = false
 wm-restack = bspwm
@@ -114,7 +115,7 @@ port = 6600
 # Use this if I decide to display song progress.
 # interval = 1
 
-format-online = <icon-prev> <label-song> <icon-next>
+format-online = <toggle>   <icon-prev>  <label-song>  <icon-next>   <icon-random>
 format-playing = ${self.format-online}
 format-paused = ${self.format-online}
 format-stopped = ${self.format-online}
@@ -124,8 +125,11 @@ label-song = %title%
 # label-time = %elapsed% / %total%
 label-offline = 🎜 mpd offline
 
-icon-prev = <<
-icon-next = >>
+icon-prev = <
+icon-next = >
+icon-play = play
+icon-pause = pause
+icon-random = random
 
 
 [module/cpu]
