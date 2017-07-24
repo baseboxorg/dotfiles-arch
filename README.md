@@ -1,6 +1,8 @@
 # dotfiles
 My personal configuration for Arch and Debian-based development environments.
 
+For a test install, I have created a [docker image](https://hub.docker.com/r/joshuarli/archbase/) preloaded with a josh sudoer, zsh and these dotfiles based off of `base/devel`. Use it with `docker run -it joshuarli/archbase`.
+
 ### Organization
 
 There are three top-level dotfile directories:
