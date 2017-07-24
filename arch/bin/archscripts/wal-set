@@ -14,8 +14,7 @@ if [[ "$1" == "--useprev" ]] && \
 fi
 
 # The -a 75 sets urxvt transparency, assuming compton as the compositor!
-wal -xi "$WALLP" -a 75
-# TODO change to python-wal when -a equivalent is developed.
+wal -i "$WALLP" -a 75
 
 # Setting the new colors for this subshell to configure
 # dunst, polybar and bspwm theming.

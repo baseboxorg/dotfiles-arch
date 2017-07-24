@@ -19,11 +19,13 @@ notify() {
 PACAUR_BASICS=(\
     cryptsetup
     curl
+    dnsutils
     dropbox
     ffmpeg
     htop
     iptables
     ncdu
+    nmap
     nvm
     pass
     python3
@@ -65,13 +67,13 @@ PACAUR_RICE=(\
     ncmpcpp
     neofetch
     polybar-git
+    python-pywal
     redshift-minimal
     rofi
     rxvt-unicode
     scrot
     sxhkd
-    sxiv
-    wal-git\
+    sxiv\
 )
 
 PACAUR_OTHER=(\
