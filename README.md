@@ -55,10 +55,10 @@ dunst                       ➔ notifications
 i3lock                      ➔ screen lock
 irssi                       ➔ IRC client
 mpd + ncmpcpp               ➔ music
-mpv                         ➔ video player
+mpv                         ➔ media player
 neofetch                    ➔ system information
 polybar (+libmpdclient)     ➔ status bars
-ranger                      ➔ file browser (TODO)
+ranger + highlight + w3m    ➔ file browser
 redshift                    ➔ screen filter
 rofi                        ➔ launcher
 rtorrent                    ➔ torrent client
@@ -67,6 +67,6 @@ sxhkd                       ➔ keybindings
 sxiv                        ➔ image viewer
 urxvt                       ➔ terminal emulator
 wal                         ➔ color theming
-zathura                     ➔ document viewer (TODO)
+zathura                     ➔ document viewer
 zsh                         ➔ shell
 ```

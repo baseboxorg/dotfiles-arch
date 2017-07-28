@@ -59,6 +59,7 @@ PACAUR_RICE=(\
     cava
     compton
     dunst
+    highlight
     i3lock
     irssi
     libmpdclient
@@ -74,7 +75,8 @@ PACAUR_RICE=(\
     rxvt-unicode
     scrot
     sxhkd
-    sxiv\
+    sxiv
+    w3m\
 )
 
 PACAUR_OTHER=(\
@@ -113,8 +115,6 @@ PACAUR_FONTS=(\
 
 # TODO
 # neovim
-# ranger
-# zathura
 # rtorrent-git
 
 set -x
