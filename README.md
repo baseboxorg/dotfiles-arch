@@ -1,32 +1,51 @@
 # dotfiles
-My personal configuration for Arch and Debian-based development environments.
-
-For a test install, I have created a [docker image](https://hub.docker.com/r/joshuarli/archbase/) preloaded with a josh sudoer, zsh and these dotfiles based off of `base/devel`. Use it with `docker run -it joshuarli/archbase`.
+My personal configuration for Arch development environments.
 
 ### Organization
 
-There are three top-level dotfile directories:
+The organization of this repository has been designed to flexibly accomodate multiple distributions.
+
+So far, there are two top level dotfile directories:
 
 * `universal/`: distribution-agnostic dotfiles and software configurations
 * `arch/`: Arch-specific dotfiles (e.g. `bspwm` configuration)
-* `debian/`: Debian-specific dotfiles (e.g. `apt` shell aliases)
 
-`universal/.commonrc` will source `~/.specificrc`, a file present in both `arch/` and `debian/`. This file stores all the distribution-specific shell aliases, functions and environment exports.
+`universal/.commonrc` sources `.specificrc`, a file present in every distribution-specific folder. It should store all the distribution-specific shell aliases, functions and environment exports.
+
+The process of supporting a new distribution would be to simply create a top level directory like `debian/` with a `.specificrc` file inside it, and a software install script like `install-debian.sh`.
+
 
 ### Installation
+
+If you are going to seriously use my dotfiles, I highly recommend reading over _everything_ to understand how exactly I have configured my machine, so that you are prepared to make appropriate changes for yourself.
 
 `git clone --recursive git@github.com:JoshuaRLi/dotfiles.git`, then...
 
 For Arch-based environments: `install-arch.sh && link.sh universal arch`
-For Debian-based environments: `install-debian.sh && link.sh universal debian`
 
-If `stow` encounters existing dotfiles while making symlinks, it will make backups suffixed with `.stow-bak`. 
+There are plans to create install scripts for other popular distributions I like working with. Until then, simply `link.sh universal` and manually installing software should suffice.
 
-To remove all symlinks to dotfiles set by GNU stow, simply `unlink.sh` with no arguments. If there is an existing `.stow.bak` match, that file will be restored by removing the backup suffix.
+To test Arch installs, I have created a [docker image](https://hub.docker.com/r/joshuarli/archbase/) preloaded with a "josh" superuser, `zsh` and these dotfiles based off of the `base/devel` Arch image. Use it with `docker run -it joshuarli/archbase`.
 
-### Software Stack (Arch)
 
-Rice stack:
+### Backup/Restore and Uninstall
+
+If `link.sh` encounters existing dotfiles while creating symlinks, it will make backups suffixed with `.stow-bak`. 
+
+To remove all dotfile symlinks, simply `unlink.sh` with no arguments. If there is an existing `.stow.bak` match, that file will be restored by removing the backup suffix.
+
+**Important:** This backup/restore functionality has not been thoroughly tested; it is a poor hack that I threw together because GNU stow does not have this functionality built-in. I would advise to use caution with my linking and unlinking scripts.
+
+
+### Software Stack
+
+Dev stack (All):
+
+```
+TODO
+```
+
+Rice stack (Arch):
 
 ```
 bspwm                       ➔ window manager
@@ -51,51 +70,3 @@ wal                         ➔ color theming
 zathura                     ➔ document viewer (TODO)
 zsh                         ➔ shell
 ```
-
-Dev stack:
-
-```
-TODO
-```
-
-### Software Stack (Debian)
-
-TODO format below prettily.
-
-**Dev**
-
-* [apt] git
-* [apt] zsh
-* [apt] tmux
-* [apt] vim
-* [apt] silversearcher-ag
-* [apt] stow
-* [apt] curl
-* [apt] wget
-* [apt] httpie
-* [apt] gnupg2
-* [apt] cryptsetup
-* [apt] rar
-* [apt] python3
-  * [apt] python3-pip
-  * [apt] python3-dev
-  * [pip] flake8
-  * [pip] virtualenv
-  * [pip] requests
-  * [pip] pdir2
-* [apt] shellcheck
-* [github source] nvm
-* [binary blob] ngrok
-
-**System**
-
-* [apt] htop
-* [apt] ncdu
-
-**CLI apps/tools**
-
-* [apt] ffmpeg
-* [apt] cmus (music player)
-* [apt] mpv (video player)
-    - Note: official repos have outdated mpv, might want to manually upgrade via official git repo release
-* [pip] youtube-dl (youtube downloader)
