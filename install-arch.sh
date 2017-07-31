@@ -10,51 +10,59 @@ cleanup () {
 trap cleanup EXIT
 
 CYANBOLD='\033[1;36m'
+YELLOWBOLD='\033[1;33m'
 NOCOLOR='\033[0m'
 
 notify() {
     echo -e "\n${CYANBOLD}[!] ${1}${NOCOLOR}\n"
 }
 
-PACAUR_BASICS=(\
-    cryptsetup
-    curl
-    dnsutils
-    dropbox
-    ffmpeg
-    htop
-    iptables
-    ncdu
-    nmap
-    nvm
-    pass
-    python3
-    shellcheck
-    stow
-    the_silver_searcher
-    tmux
-    trash-cli
-    ufw
-    vim
-    xclip\
-)
+function ask {
+    while true; do
+        echo -en "\n${YELLOWBOLD}[?] "$1" [y/n]: ${NOCOLOR}"
+        read response
+        case $response in
+            [Yy]*) return 0 ;;
+            [Nn]*) return 1 ;;
+        esac
+    done
+}
 
-PACAUR_UTIL=(\
+CLI=(\
     asciinema
+    htop
     httpie
     imgp
+    ncdu
+    progress
+    trash-cli
+    xclip
     youtube-dl\
 )
 
-PACAUR_PYTHON=(\
+NETWORK=(\
+    dnsutils
+    iptables
+    nmap
+    ufw\
+)
+
+DEV=(\
     flake8
+    neovim
+    nvm
     pyenv
     python-pip
     python-requests
-    python-virtualenv\
+    python-virtualenv
+    python3
+    shellcheck\
+    the_silver_searcher
+    tmux
+    vim\
 )
 
-PACAUR_RICE=(\
+RICE=(\
     bspwm
     cava
     compton
@@ -79,50 +87,48 @@ PACAUR_RICE=(\
     w3m\
 )
 
-PACAUR_OTHER=(\
-    docker
-    easytag
-    libreoffice-fresh
-    slack-desktop
-    texlive-core
-    texlive-latexextra
-    texlive-fontsextra\
+OTHER=(\
+    cryptsetup\
 )
 
-PACAUR_FONTS=(\
+FONTS=(\
     adobe-source-code-pro-fonts
     adobe-source-han-sans-otc-fonts
     adobe-source-sans-pro-fonts
     adobe-source-serif-pro-fonts
-    ttf-unifont
     ttf-arphic-uming
     ttf-dejavu
     ttf-font-awesome
-    ttf-freefont
-    ttf-google-fonts-git
     ttf-hack
     ttf-inconsolata
     ttf-liberation
     ttf-monaco
     ttf-ms-fonts
     ttf-noto
-    ttf-opensans
     ttf-roboto
-    ttf-roboto-mono
     ttf-symbola
-    ttf-twemoji-color\
+    ttf-twemoji-color
+    ttf-unifont\
 )
 
-# TODO
-# neovim
-# rtorrent-git
+OPTIONAL=(\
+    docker
+    dropbox
+    easytag
+    libreoffice-fresh
+    slack-desktop\
+)
 
 set -x
 
-notify "Installing basics..."
-sudo pacman --noconfirm -Sy base-devel cmake git wget gnupg2
+notify "Updating..."
+sudo pacman-key --refresh-keys
+sudo pacman -Syu
 
-# Automatically install pacaur: install cower.
+notify "Installing prerequisites..."
+sudo pacman --noconfirm -S base-devel cmake git curl wget gnupg2 stow
+
+# Automatically install pacaur: cower.
 notify "Installing pacaur..."
 cd "$TMP"
 mkdir cower && cd cower
@@ -131,30 +137,33 @@ curl "https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=cower" -o PKGBUILD
 . "/etc/profile.d/perlbin.sh"
 makepkg -si
 
-# Automatically install pacaur: install pacaur.
+# Automatically install pacaur: pacaur.
 cd "$TMP"
 mkdir pacaur && cd pacaur
 curl https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=pacaur -o PKGBUILD
 makepkg -si
+
+set +x
 
 notify "Updating submodules..."
 cd "$HERE"
 git submodule update --recursive --remote
 mkdir -p "${HOME}/bin"
 
-notify "Refreshing current install..."
-sudo pacman-key --refresh-keys
-pacaur --noedit --noconfirm -Syu
-
-set +x
-
 notify "Installing new software..."
-pacaur --noedit --noconfirm -S "${PACAUR_BASICS[@]}"
-pacaur --noedit --noconfirm -S "${PACAUR_UTIL[@]}"
-pacaur --noedit --noconfirm -S "${PACAUR_PYTHON[@]}"
-pacaur --noedit --noconfirm -S "${PACAUR_RICE[@]}"
-pacaur --noedit --noconfirm -S "${PACAUR_OTHER[@]}"
-pacaur --noedit --noconfirm -S "${PACAUR_FONTS[@]}"
+pacaur --noedit --noconfirm -S "${CLI[@]}"
+pacaur --noedit --noconfirm -S "${NETWORK[@]}"
+pacaur --noedit --noconfirm -S "${DEV[@]}"
+pacaur --noedit --noconfirm -S "${RICE[@]}"
+pacaur --noedit --noconfirm -S "${OTHER[@]}"
+pacaur --noedit --noconfirm -S "${FONTS[@]}"
+
+for pkg in "${OPTIONAL[@]}"
+do
+    if ask "Install ${pkg}?"; then
+        pacaur --noedit --noconfirm -S "$pkg"
+    fi
+done
 
 notify "Done! Reloading zsh..."
 exec zsh
