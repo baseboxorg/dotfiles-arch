@@ -1,6 +1,6 @@
 # Custom aliases across all shells.
 
-alias ag='ag --path-to-agignore ${HOME}/.agignore'
+alias ag='ag -a'
 alias gpg='gpg2'
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias serve='python3 -m http.server 8888'

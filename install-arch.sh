@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 HERE="$(dirname "$(readlink -f "$0")")"
 TMP="$(mktemp -d)"
 
@@ -119,31 +121,31 @@ OPTIONAL=(\
     slack-desktop\
 )
 
-set -x
+if ask "Refresh pacman keys?"; then
+    sudo pacman-key --refresh-keys
+fi
 
-notify "Updating..."
-sudo pacman-key --refresh-keys
+notify "Updating install..."
 sudo pacman -Syu
 
 notify "Installing prerequisites..."
-sudo pacman --noconfirm -S base-devel cmake git curl wget gnupg2 stow
+sudo pacman --noconfirm -S base-devel cmake git curl wget gnupg2 stow openssh
 
-# Automatically install pacaur: cower.
-notify "Installing pacaur..."
-cd "$TMP"
-mkdir cower && cd cower
-gpg2 --recv-keys 1EB2638FF56C0C53
-curl "https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=cower" -o PKGBUILD
-. "/etc/profile.d/perlbin.sh"
-makepkg -si
+if ask "Install pacaur (required for software installation)?"; then
+    # Automatically install pacaur: cower.
+    cd "$TMP"
+    mkdir cower && cd cower
+    gpg2 --recv-keys 1EB2638FF56C0C53
+    curl "https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=cower" -o PKGBUILD
+    . "/etc/profile.d/perlbin.sh"
+    makepkg -si
 
-# Automatically install pacaur: pacaur.
-cd "$TMP"
-mkdir pacaur && cd pacaur
-curl https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=pacaur -o PKGBUILD
-makepkg -si
-
-set +x
+    # Automatically install pacaur: pacaur.
+    cd "$TMP"
+    mkdir pacaur && cd pacaur
+    curl https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=pacaur -o PKGBUILD
+    makepkg -si
+fi
 
 notify "Updating submodules..."
 cd "$HERE"
@@ -151,12 +153,24 @@ git submodule update --recursive --remote
 mkdir -p "${HOME}/bin"
 
 notify "Installing new software..."
-pacaur --noedit --noconfirm -S "${CLI[@]}"
-pacaur --noedit --noconfirm -S "${NETWORK[@]}"
-pacaur --noedit --noconfirm -S "${DEV[@]}"
-pacaur --noedit --noconfirm -S "${RICE[@]}"
-pacaur --noedit --noconfirm -S "${OTHER[@]}"
-pacaur --noedit --noconfirm -S "${FONTS[@]}"
+if ask "Install CLI software?"; then
+    pacaur --noedit --noconfirm -S "${CLI[@]}"
+fi
+if ask "Install NETWORK software?"; then
+    pacaur --noedit --noconfirm -S "${NETWORK[@]}"
+fi
+if ask "Install DEV software?"; then
+    pacaur --noedit --noconfirm -S "${DEV[@]}"
+fi
+if ask "Install RICE software?"; then
+    pacaur --noedit --noconfirm -S "${RICE[@]}"
+fi
+if ask "Install OTHER software?"; then
+    pacaur --noedit --noconfirm -S "${OTHER[@]}"
+fi
+if ask "Install FONTS?"; then
+    pacaur --noedit --noconfirm -S "${FONTS[@]}"
+fi
 
 for pkg in "${OPTIONAL[@]}"
 do

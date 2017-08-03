@@ -12,7 +12,6 @@
 [core]
     compression = 9
     editor = vim
-    excludesfile = ~/.gitignore_global
     pager = less -RS
 
 #[commit]
