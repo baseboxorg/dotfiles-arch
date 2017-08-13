@@ -1,7 +1,9 @@
 # dotfiles
 My personal configuration for Arch development environments (more coming soon).
 
-For server environments (non-graphical, just pure terminal emulator and command line usage), use the much lighter and stripped down [dotfiles-server-arch](https://github.com/JoshuaRLi/dotfiles-server-arch) and [dotfiles-server-debian](https://github.com/JoshuaRLi/dotfiles-server-debian).
+For server environments (non-graphical; just pure terminal emulator and command line usage), use the much lighter and stripped down [dotfiles-server-arch](https://github.com/JoshuaRLi/dotfiles-server-arch) or [dotfiles-server-debian](https://github.com/JoshuaRLi/dotfiles-server-debian).
+
+**NOTE:** Arch + universal dotfiles are **not** finalized yet. This repository is a work in progress.
 
 
 ### Organization
@@ -20,15 +22,13 @@ The process of supporting a new distribution would be to simply create a top lev
 
 ### Installation
 
-If you are going to seriously use my dotfiles, I highly recommend reading over _everything_ to understand how exactly I have configured my machine, so that you are prepared to make appropriate changes for yourself.
+If you are going to actually use my dotfiles, I recommend reading over everything to understand how exactly I have configured my machine. This way, you are prepared to make the appropriate changes for your own needs. Things are not exactly plug-and-play.
 
 `git clone --recursive git@github.com:JoshuaRLi/dotfiles.git`, then...
 
 For Arch-based environments: `install-arch.sh && link.sh universal arch`
 
-There are plans to create install scripts for other popular distributions I like working with. Until then, simply `link.sh universal` and manually installing software should suffice.
-
-To test Arch installs, I have created a [docker image](https://hub.docker.com/r/joshuarli/archbase/) preloaded with a "josh" superuser, `zsh` and these dotfiles based off of the `base/devel` Arch image. Use it with `docker run -it joshuarli/archbase`.
+To test installs on Arch, I have created a `base/devel`-based [docker image](https://hub.docker.com/r/joshuarli/archbase/) preloaded with a "josh" sudo-enabled user, `zsh` and these dotfiles. Use it with `docker run -it joshuarli/archbase`.
 
 
 ### Backup/Restore and Uninstall
@@ -42,7 +42,7 @@ To remove all dotfile symlinks, simply `unlink.sh` with no arguments. If there i
 
 ### Software Stack
 
-Dev stack (All):
+Dev stack (Universal):
 
 ```
 TODO
@@ -60,11 +60,10 @@ irssi                       ➔ IRC client
 mpd + ncmpcpp               ➔ music
 mpv                         ➔ media player
 neofetch                    ➔ system information
-polybar (+libmpdclient)     ➔ status bars
+polybar (+ libmpdclient)    ➔ status bars
 ranger + highlight + w3m    ➔ file browser
 redshift                    ➔ screen filter
 rofi                        ➔ launcher
-rtorrent                    ➔ torrent client
 scrot, maim                 ➔ screenshot
 sxhkd                       ➔ keybindings
 sxiv                        ➔ image viewer
