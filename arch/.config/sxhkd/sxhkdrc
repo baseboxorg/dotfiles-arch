@@ -1,6 +1,8 @@
 super + Escape
     pkill -USR1 -x sxhkd ;\
-    notify-send "[sxhkd] config reloaded" -t 1
+    notify-send "[sxhkd] config reloaded" -t 1 ;\
+    sh "${HOME}/.config/bspwm/bspwmrc" ;\
+    notify-send "[bspwm] config reloaded" -t 1
 
 
 #
@@ -22,37 +24,43 @@ ctrl + alt + Delete
 shift + Return
     rofi -show run
 
+alt + Return
+    rofi -show ssh
+
 ctrl + shift + Return
     rofi -show window
-
-ctrl + alt + Return
-    rofi -show ssh
 
 super + w
     wal-set
 
 Print
-    scrot '%Y-%m-%d-%H-%M-%S_$wx$h.png' --quality 100 \
-        -e 'mv $f ~/Screenshots && notify-send "Screenshot $f saved."'
+    mkdir -p "${HOME}/Screenshots" && \
+    maim "${HOME}/Screenshots/"$(date +%Y-%m-%d-%H-%M-%S)".png" --quality 5 && \
+        notify-send "[maim] Screenshot saved." -t 1
 
 shift + Print
-    scrot -s '%Y-%m-%d-%H-%M-%S_$wx$h.png' --quality 100 \
-        -e 'mv $f ~/Screenshots && notify-send "Screenshot $f saved."'
+    mkdir -p "${HOME}/Screenshots" && \
+    maim -s "${HOME}/Screenshots/"$(date +%Y-%m-%d-%H-%M-%S)".png" --quality 10 && \
+        notify-send "[maim] Screenshot selection saved." -t 1
+
+alt + Print
+    maim -s --quality 10 | xclip -selection clipboard -t image/png && \
+        notify-send "[maim] Screenshot selection saved to clipboard buffer." -t 1
 
 XF86Audio{LowerVolume,RaiseVolume}
-    pactl set-sink-volume 0 {-5%,+5%}
-    #amixer sset Master 5%{-,+}
+    amixer sset Master 5%{-,+}
+    # pactl set-sink-volume 0 {-5%,+5%}
 
 XF86AudioMute
     pactl set-sink-mute 0 toggle
-    #amixer sset Master 0%
 
 XF86MonBrightness{Down,Up}
-    xbacklight -{dec,inc} 10
+    light -{U,A} 10
+    # xbacklight -{dec,inc} 10
 
 
 #
-# BPSWM
+# BSPWM
 #
 
 # close or kill

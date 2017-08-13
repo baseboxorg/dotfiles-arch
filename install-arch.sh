@@ -38,7 +38,6 @@ CLI=(\
     ncdu
     progress
     trash-cli
-    xclip
     youtube-dl\
 )
 
@@ -58,7 +57,7 @@ DEV=(\
     python-requests
     python-virtualenv
     python3
-    shellcheck\
+    shellcheck
     the_silver_searcher
     tmux
     vim\
@@ -90,7 +89,9 @@ RICE=(\
 )
 
 OTHER=(\
-    cryptsetup\
+    cryptsetup
+    light-git
+    xclip\
 )
 
 FONTS=(\
@@ -114,9 +115,13 @@ FONTS=(\
 )
 
 OPTIONAL=(\
+    adwaita-qt4
+    deluge
     docker
     dropbox
     easytag
+    gnome-themes-standard
+    keepassx2
     libreoffice-fresh
     slack-desktop\
 )
