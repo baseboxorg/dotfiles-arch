@@ -1,9 +1,18 @@
+#!/usr/bin/env bash
+
 # Helper function to enforce argc and display provided usage string when violated.
 # USAGE: "_require $# 3 "$0 [ARGS]" || return 1" means the function needs exactly 3 arguments.
 _require () {
     if [[ "$1" -ne "$2" ]]; then
-        echo "USAGE: $3" && return 1
+        printf "%s\n" "USAGE: ${3}" ; return 1
     fi
+}
+
+
+# Shows the source code of a shell function.
+src () {
+    _require $# 1 "$0 [shell function name]" || return 1
+    declare -f "$1" || printf "%s\n" "${1} is not a shell function."
 }
 
 
@@ -12,7 +21,7 @@ alias mc='mkcd'
 mkcd () {
     _require $# 1 "$0 [path/to/newdir]" || return 1
     if [[ -d "$1" ]]; then
-        echo "${1} already exists."
+        printf "%s\n" "${1} already exists."
     else
         mkdir -p "$1" && builtin cd "$1"
     fi
@@ -22,18 +31,10 @@ mkcd () {
 # auto-ls after cd. Does not show hidden files.
 cd () {
     if [[ -n "$1" ]]; then
-        builtin cd "$1" && l
+        builtin cd "$1" && ls -lph
     else
-        builtin cd "$HOME" && l
+        builtin cd "$HOME" && ls -lph
     fi
-}
-
-
-# help shortcut so I don't have to type --help.
-alias h='help'
-help () {
-    _require $# 1 "$0 [command]" || return 1
-    "$1" --help |& less  # bash 4.0+ shorthand for 2>&1 through a pipe
 }
 
 
@@ -68,7 +69,7 @@ lockdown () {
 alias e='extract'
 extract () {
     _require $# 1 "$0 [path/to/archive]" || return 1
-    if [ -f "$1" ] ; then
+    if [ -f "$1" ]; then
         case $1 in
             *.tar.gz)    tar xvzf "$1"    ;;
             *.tgz)       tar xvzf "$1"    ;;
@@ -80,10 +81,10 @@ extract () {
             *.zip)       unzip "$1"       ;;
             *.rar)       rar x "$1"       ;;
             *.7z)        7z x "$1"        ;;
-            *)           echo "Can't recognize file extension on '$1'" ;;
+            *)           printf "%s\n" "Can't recognize file extension on '${1}'" ;;
         esac
     else
-        echo "'$1' is not a valid file!"
+        printf "%s\n" "'${1}' is not a valid file!"
     fi
 }
 
@@ -93,7 +94,7 @@ extract () {
 # deletes source files if successful.
 archive () {
     _require $# 1 "$0 [path/to/dir]" || return 1
-    ARCHIVE="$(echo ""$(dirname "$1")"/"$(basename "$1")".tgz" | tr ' ' '-')"
+    ARCHIVE="$(printf "%s" "$(dirname "$1")/$(basename "$1").tgz" | tr ' ' '-')"
     tar cvfz "$ARCHIVE" "$1" --remove-files
 }
 
@@ -105,15 +106,15 @@ killtty() {
 }
 
 
-##### BACKUP #####
-
 # unlocks LUKS-encrypted drives and mounts at /tmp/ALIAS.
 unlock () {
     _require $# 2 "$0 [path/to/device] [mapper alias]" || return 1
+    if ! command -v cryptsetup > /dev/null 2>&1; then
+        printf "cryptsetup is not installed.\n" ; return 1
+    fi
     MOUNTPOINT="/tmp/${2}"
     if ! mkdir "$MOUNTPOINT"; then
-        echo "Choose a different /dev/mapper/ alias."
-        return 1
+        printf "Choose a different /dev/mapper/ alias.\n" ; return 1
     fi
     sudo cryptsetup luksOpen "$1" "$2"
     sudo mount "/dev/mapper/${2}" "$MOUNTPOINT" && cd "$MOUNTPOINT"
@@ -123,16 +124,22 @@ unlock () {
 # unmounts from /tmp/ALIAS and locks LUKS-encrypted drives.
 lock () {
     _require $# 1 "$0 [MAPPER ALIAS]" || return 1
+    if ! command -v cryptsetup > /dev/null 2>&1; then
+        printf "cryptsetup is not installed.\n" ; return 1
+    fi
     builtin cd "$HOME"
     sudo umount "/tmp/${1}"
     sudo cryptsetup luksClose "$1" && rmdir "/tmp/${1}"
-    echo "Remember to power off! udisksctl power-off -b [block]"
+    printf "Remember to power off! udisksctl power-off -b [block]\n"
 }
 
 
 # rsync flag wrapper for backup and sync.
 rmirror () {
     _require $# 2 "$0 [/path/to/source/dir] [/path/to/dest/dir]" || return 1
+    if ! command -v rsync > /dev/null 2>&1; then
+        printf "rsync is not installed.\n" ; return 1
+    fi
     rsync -aAXhP --delete "$1" "$2"  # reflect deleted file changes in the destination
 }
 
@@ -140,6 +147,9 @@ rmirror () {
 # special rsync shortcut for home backups.
 hmirror () {
     _require $# 1 "$0 [/path/to/backup/dir]" || return 1
+    if ! command -v rsync > /dev/null 2>&1; then
+        printf "rsync is not installed.\n" ; return 1
+    fi
     rsync -aAXhP --delete \
         --exclude '.cache' \
         --exclude '.gnupg' \
@@ -153,6 +163,9 @@ hmirror () {
 # special rsync shortcut for system backups.
 smirror () {
     _require $# 1 "$0 [/path/to/backup/dir]" || return 1
+    if ! command -v rsync > /dev/null 2>&1; then
+        printf "rsync is not installed.\n" ; return 1
+    fi
     sudo rsync -aAXhP --delete \
         --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/home/*","/lost+found"} \
         "/" "$1"
@@ -161,13 +174,26 @@ smirror () {
 
 # upload stdin or a file to pb.
 pb () {
-    curl -F "c=@${1:--}" -F p=1 https://ptpb.pw/
+    if ! command -v curl > /dev/null 2>&1; then
+        printf "curl is not installed.\n" ; return 1
+    fi
+    curl -F "c=@${1:--}" -F p=1 "https://ptpb.pw/"
 }
 
 
 # record and upload asciinema.
-pbs () {
-    asciinema rec /tmp/$$.json && \
-    pb /tmp/$$.json && \
-    echo "Prepend t/ to view the asciinema!"
+rec () {
+    if ! command -v asciinema > /dev/null 2>&1; then
+        printf "asciinema is not installed.\n" ; return 1
+    fi
+    asciinema rec "/tmp/$$.json"  && \
+    pb "/tmp/$$.json"             && \
+    printf "Prepend t/ to view the asciinema!\n"
+}
+
+
+# generate random password.
+pwgen () {
+    _require $# 1 "$0 [length]" || return 1
+    base64 /dev/urandom | head -c "$1" ; printf '\n'
 }

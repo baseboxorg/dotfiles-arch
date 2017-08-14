@@ -1,7 +1,14 @@
 # Custom aliases across all shells.
 
 alias ag='ag -a'
+alias agh='ag -a --hidden'
+alias badlinks='find . -xtype l'
+alias df='df --exclude-type=tmpfs -h'
+alias dmesg='dmesg -xHw'
+alias dusk='sudo du -skh .??* * | sort -rh'
 alias gpg='gpg2'
+alias lsblk='lsblk --output=NAME,TYPE,FSTYPE,LABEL,PARTLABEL,SIZE,UUID,MOUNTPOINT'
+alias lsusb='lsusb -t'
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias serve='python3 -m http.server 8888'
 alias sitemirror='wget -mkKE -e robots=off'
@@ -17,23 +24,16 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 alias c='clear'
-alias flatten='find . -type f -exec mv {} . \; && find . -type d -empty -delete'
 alias less='less -irS'
 alias pls='sudo !!'
 alias po='popd'
 alias pu='pushd'
 alias q='exit'
+alias rd='rmdir'
 alias rip='rm -rf'
-alias rmd='rmdir'
-alias tail='tail -f -n 25'
+alias tailf='tail -f -n 50'
 
-alias df='df --exclude-type=tmpfs -h'
-alias dmesg='dmesg -xHw'
-alias dusk='sudo du -skh .??* * | sort -rh'
-alias lsblk='lsblk --output=NAME,TYPE,FSTYPE,LABEL,PARTLABEL,SIZE,UUID,MOUNTPOINT'
-alias lsusb='lsusb -t'
-
-# Fancier git aliases are in .gitconfig.
+# Fancier git aliases are in ~/.gitconfig.
 # These are some common ones so I don't have to type the space in between.
 alias g='git'
 alias ga='g add'
@@ -57,6 +57,8 @@ alias gpomf='gp -u origin master --force'
 gr () {
     git reset HEAD~"$1"
 }
+alias gra='g remote add'
+alias grao='gra origin'
 alias grsu='g remote set-url'
 alias grsuo='grsu origin'
 alias grv='g remote -v'
@@ -67,16 +69,17 @@ alias gt='g tag -s'
 alias gu='g submodule update --init --recursive --remote'
 
 alias p3='python3'
+alias py='python3'
 alias pipi='p3 -m pip install --user'
 alias pipu='p3 -m pip uninstall'
 alias venva='source ./venv/bin/activate'
 alias venvd='deactivate'
 
-# TODO node stuff when I actually get to learning it
+# TODO node.js
 
 alias tn='tmux new-session -s'
 alias ta='tmux attach -t'
 alias tad='tmux attach -d -t'
-alias tkss='tmux kill-session -t'
+alias tks='tmux kill-session -t'
 alias tkill='tmux kill-server'
 alias tl='tmux list-sessions'

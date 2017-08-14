@@ -14,8 +14,8 @@
     editor = vim
     pager = less -RS
 
-#[commit]
-#    gpgsign = true
+[commit]
+    gpgsign = true
 
 [gpg]
     program = gpg2
