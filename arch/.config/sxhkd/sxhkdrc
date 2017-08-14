@@ -47,12 +47,25 @@ alt + Print
     maim -s --quality 10 | xclip -selection clipboard -t image/png && \
         notify-send "[maim] Screenshot selection saved to clipboard buffer." -t 1
 
+XF86AudioMute
+    pactl set-sink-mute 0 toggle
+
 XF86Audio{LowerVolume,RaiseVolume}
     amixer sset Master 5%{-,+}
     # pactl set-sink-volume 0 {-5%,+5%}
 
-XF86AudioMute
-    pactl set-sink-mute 0 toggle
+XF86AudioPrev
+    mpc prev
+
+XF86AudioPlay
+    mpc toggle
+
+ctrl + alt + r
+    MPDR="$(mpc random | grep -Po 'random: [^ ]+')" ;\
+    notify-send "[mpd] ${MPDR}" -t 1
+
+XF86AudioNext
+    mpc next
 
 XF86MonBrightness{Down,Up}
     light -{U,A} 10
@@ -62,6 +75,9 @@ XF86MonBrightness{Down,Up}
 #
 # BSPWM
 #
+
+super + f
+    bspc window -t fullscreen
 
 # close or kill
 super + {c,k}

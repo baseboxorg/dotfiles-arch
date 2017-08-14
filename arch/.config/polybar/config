@@ -38,6 +38,7 @@ foreground = ${colors.foreground}
 font-0 = "Hack:size=10;2"
 font-1 = "FontAwesome:size=10;2"
 font-2 = "unifont:size=10;2"
+font-3 = "Source Han Sans:size=10;2"
 
 modules-left = bspwm
 modules-center = xwindow
@@ -59,9 +60,10 @@ foreground = ${colors.foreground}
 font-0 = "Hack:size=10;2"
 font-1 = "FontAwesome:size=10;2"
 font-2 = "unifont:size=10;2"
+font-3 = "Source Han Sans:size=10;2"
 
 tray-position = left
-modules-center = mpd
+modules-center = mpdcurrentsong
 modules-right = volume separator filesystem separator battery
 
 
@@ -113,28 +115,10 @@ mount-0 = /
 label-mounted =  %used% / %total%
 
 
-[module/mpd]
-type = internal/mpd
-host = 127.0.0.1
-port = 6600
-# Use this if I decide to display song progress.
-# interval = 1
-
-format-online = <toggle>   <icon-prev>  <label-song>  <icon-next>   <icon-random>
-format-playing = ${self.format-online}
-format-paused = ${self.format-online}
-format-stopped = ${self.format-online}
-format-offline = <label-offline>
-
-label-song = %title%
-# label-time = %elapsed% / %total%
-label-offline = 🎜 mpd offline
-
-icon-prev = <
-icon-next = >
-icon-play = play
-icon-pause = pause
-icon-random = random
+[module/mpdcurrentsong]
+type = custom/script
+exec = mpc current
+interval = 1
 
 
 [module/cpu]

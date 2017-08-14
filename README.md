@@ -57,7 +57,7 @@ compton                     ➔ display compositor
 dunst                       ➔ notifications
 i3lock                      ➔ screen lock
 irssi                       ➔ IRC client
-mpd + ncmpcpp               ➔ music
+mpd + mpc + ncmpcpp         ➔ music
 mpv                         ➔ media player
 neofetch                    ➔ system information
 polybar (+ libmpdclient)    ➔ status bars

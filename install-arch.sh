@@ -73,6 +73,7 @@ RICE=(\
     irssi
     libmpdclient
     maim
+    mpc
     mpd
     mpv
     ncmpcpp
