@@ -31,7 +31,7 @@ ctrl + shift + Return
     rofi -show window
 
 super + w
-    wal-set
+    ${HOME}/bin/archscripts/wal-set
 
 Print
     mkdir -p "${HOME}/Screenshots" && \

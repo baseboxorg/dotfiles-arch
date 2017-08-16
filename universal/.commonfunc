@@ -116,9 +116,8 @@ unlock () {
     if ! mkdir "$MOUNTPOINT"; then
         printf "Choose a different /dev/mapper/ alias.\n" ; return 1
     fi
-    sudo cryptsetup luksOpen "$1" "$2"          && \
-    sudo mount "/dev/mapper/${2}" "$MOUNTPOINT" && \
-    cd "$MOUNTPOINT"
+    sudo cryptsetup luksOpen "$1" "$2" && \
+    sudo mount -v "/dev/mapper/${2}" "$MOUNTPOINT"
 }
 
 
@@ -128,10 +127,10 @@ lock () {
     if ! command -v cryptsetup > /dev/null 2>&1; then
         printf "cryptsetup is not installed.\n" ; return 1
     fi
-    sudo umount "/tmp/${1}"         && \
+    cd "$HOME"                      && \
+    sudo umount -v "/tmp/${1}"      && \
     sudo cryptsetup luksClose "$1"  && \
-    sudo rmdir "/tmp/${1}"          && \
-    printf "Remember to power off! udisksctl power-off -b [block]\n"
+    sudo rmdir "/tmp/${1}"
 }
 
 

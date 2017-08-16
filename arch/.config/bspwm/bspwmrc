@@ -18,7 +18,7 @@ bspc config pointer_follows_focus false
 bspc config click_to_focus true
 
 # Now that bspwm is loaded, use wal-set to reload polybar so that the window module shows up.
-wal-set --useprev
+"${HOME}/bin/archscripts/wal-set" --useprev
 
 # bspc rule -a URxvt:cava focus=off desktop=^1 private=on locked=on floating=on sticky=on
 # urxvtc -name cava -e cava &> /dev/null

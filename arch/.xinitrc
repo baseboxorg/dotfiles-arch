@@ -1,16 +1,6 @@
 #!/bin/sh
 
-urxvtd -q -f -o &
-sxhkd &
-redshift &
-mpd &
-dunst &
-polybar top &
-polybar bottom &
+urxvtd -q -f -o & sxhkd & redshift & mpd &
 
-wal-set --useprev                       && \
-    [[ -f ~/.Xresources ]]              && \
-    xrdb -merge -I$HOME ~/.Xresources
-
-xsetroot -cursor_name left_ptr
+"${HOME}/bin/archscripts/wal-set" --useprev && \
 exec bspwm
