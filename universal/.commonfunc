@@ -116,8 +116,9 @@ unlock () {
     if ! mkdir "$MOUNTPOINT"; then
         printf "Choose a different /dev/mapper/ alias.\n" ; return 1
     fi
-    sudo cryptsetup luksOpen "$1" "$2"
-    sudo mount "/dev/mapper/${2}" "$MOUNTPOINT" && cd "$MOUNTPOINT"
+    sudo cryptsetup luksOpen "$1" "$2"          && \
+    sudo mount "/dev/mapper/${2}" "$MOUNTPOINT" && \
+    cd "$MOUNTPOINT"
 }
 
 
@@ -127,9 +128,9 @@ lock () {
     if ! command -v cryptsetup > /dev/null 2>&1; then
         printf "cryptsetup is not installed.\n" ; return 1
     fi
-    builtin cd "$HOME"
-    sudo umount "/tmp/${1}"
-    sudo cryptsetup luksClose "$1" && rmdir "/tmp/${1}"
+    sudo umount "/tmp/${1}"         && \
+    sudo cryptsetup luksClose "$1"  && \
+    sudo rmdir "/tmp/${1}"          && \
     printf "Remember to power off! udisksctl power-off -b [block]\n"
 }
 
@@ -150,11 +151,11 @@ hmirror () {
     if ! command -v rsync > /dev/null 2>&1; then
         printf "rsync is not installed.\n" ; return 1
     fi
-    rsync -aAXhP --delete \
-        --exclude '.cache' \
-        --exclude '.gnupg' \
-        --exclude '.ssh' \
-        --exclude 'bigmedia' \
+    rsync -aAXhP --delete       \
+        --exclude '.cache'      \
+        --exclude '.gnupg'      \
+        --exclude '.ssh'        \
+        --exclude 'bigmedia'    \
         "$HOME" "$1"
     # bigmedia is where isos, scraped music, torrent downloads, etc. are stored
 }
