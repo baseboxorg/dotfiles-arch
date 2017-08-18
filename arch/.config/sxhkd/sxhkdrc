@@ -21,8 +21,9 @@ ctrl + shift + l
 ctrl + alt + Delete
     lock-screen ; systemctl suspend
 
+# TODO fix sh environment issues, have to manually source for now
 shift + Return
-    rofi -show run
+    . ~/.commonexports ; rofi -show run
 
 alt + Return
     rofi -show ssh
@@ -30,7 +31,9 @@ alt + Return
 ctrl + shift + Return
     rofi -show window
 
+# TODO fix sh environment issues, have to manually source for now
 super + w
+    . ~/.commonexports && \
     WS="${HOME}/bin/archscripts/wal-set" && \
     $WS $(shuf <($WS list) | head -n 1)
 
