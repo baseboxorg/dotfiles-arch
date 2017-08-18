@@ -31,7 +31,8 @@ ctrl + shift + Return
     rofi -show window
 
 super + w
-    ${HOME}/bin/archscripts/wal-set
+    WS="${HOME}/bin/archscripts/wal-set" && \
+    $WS $(shuf <($WS list) | head -n 1)
 
 Print
     mkdir -p "${HOME}/Screenshots" && \

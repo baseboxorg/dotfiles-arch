@@ -1,17 +1,28 @@
 #!/usr/bin/env bash
 
-# default behavior is to bring up a new random wallpaper.
 # wal-set --useprev will attempt to persist cached colors,
 # which is useful in .xinitrc or if something happens and
 # you just want to reload stuff.
 
 notify-send "[wal-set] init" -t 1
 
-WALLP="${HOME}/Wallpapers/optimized-1920x1080"
+WALLP="${HOME}/Wallpapers/Originals-1920x1080"
 
-if [[ "$1" == "--useprev" ]] && \
+if [[ "$1" == 'list' ]]; then
+    printf '%s\n' "$(ls "$WALLP")"
+    exit 1
+elif [[ "$1" == '--useprev' ]] && \
    [[ -f "${HOME}/.cache/wal/wal" ]]; then
     WALLP="$(< "${HOME}/.cache/wal/wal")"
+else
+    CATEGORY="${WALLP}/${1}"
+    if [[ -d "$CATEGORY" ]]; then
+        WALLP="$CATEGORY"
+        notify-send "[wal-set] using category ${1}" -t 1
+    else
+        printf '%s\n' "Directory ${CATEGORY} does not exist."
+        exit 1
+    fi
 fi
 
 wal -i "$WALLP" -a 75
