@@ -31,7 +31,7 @@ height = 28
 radius = 0
 
 border-bottom-size = 2
-border-color = ${colors.primary}
+border-color = ${colors.lbg2}
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -53,7 +53,7 @@ height = 28
 radius = 0
 
 border-top-size = 2
-border-color = ${colors.primary}
+border-color = ${colors.lbg2}
 
 background = ${colors.background}
 foreground = ${colors.foreground}

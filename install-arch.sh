@@ -32,20 +32,17 @@ function ask {
 
 CLI=(\
     asciinema
+    dnsutils
     htop
     httpie
     imgp
+    iptables
     ncdu
+    nmap
     progress
     trash-cli
+    ufw
     youtube-dl\
-)
-
-NETWORK=(\
-    dnsutils
-    iptables
-    nmap
-    ufw\
 )
 
 DEV=(\
@@ -55,7 +52,6 @@ DEV=(\
     pyenv
     python-pip
     python-requests
-    python-virtualenv
     python3
     shellcheck
     the_silver_searcher
@@ -72,6 +68,7 @@ RICE=(\
     i3lock
     irssi
     libmpdclient
+    light-git
     maim
     mpc
     mpd
@@ -83,15 +80,16 @@ RICE=(\
     redshift-minimal
     rofi
     rxvt-unicode
-    scrot
     sxhkd
     sxiv
-    w3m\
+    w3m
+    zathura\
 )
 
 OTHER=(\
+    adwaita-qt4
     cryptsetup
-    light-git
+    gnome-themes-standard
     xclip\
 )
 
@@ -116,12 +114,10 @@ FONTS=(\
 )
 
 OPTIONAL=(\
-    adwaita-qt4
     deluge
     docker
     dropbox
     easytag
-    gnome-themes-standard
     keepassx2
     libreoffice-fresh
     slack-desktop\
@@ -161,9 +157,6 @@ mkdir -p "${HOME}/bin"
 notify "Installing new software..."
 if ask "Install CLI software?"; then
     pacaur --noedit --noconfirm -S "${CLI[@]}"
-fi
-if ask "Install NETWORK software?"; then
-    pacaur --noedit --noconfirm -S "${NETWORK[@]}"
 fi
 if ask "Install DEV software?"; then
     pacaur --noedit --noconfirm -S "${DEV[@]}"

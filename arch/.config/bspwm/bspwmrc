@@ -2,23 +2,22 @@
 
 bspc monitor -d I II III IV V VI VII VIII IX
 
-bspc config border_width         2
-bspc config window_gap           12
+bspc config border_width           2
+bspc config window_gap             12
 
-bspc config split_ratio          0.50
-bspc config top_padding          20
-bspc config bottom_padding       20
-bspc config left_padding         20
-bspc config right_padding        20
-bspc config borderless_monocle   true
-bspc config gapless_monocle      true
+bspc config split_ratio            0.50
+bspc config top_padding            20
+bspc config bottom_padding         20
+bspc config left_padding           20
+bspc config right_padding          20
+bspc config borderless_monocle     true
+bspc config gapless_monocle        true
+bspc config paddingless_monocle    true
 
-bspc config focus_follows_pointer true
-bspc config pointer_follows_focus false
-bspc config click_to_focus true
-
-# Now that bspwm is loaded, use wal-set to reload polybar so that the window module shows up.
-"${HOME}/bin/archscripts/wal-set" --useprev
+bspc config focus_follows_pointer  true
+bspc config pointer_follows_focus  false
 
 # bspc rule -a URxvt:cava focus=off desktop=^1 private=on locked=on floating=on sticky=on
 # urxvtc -name cava -e cava &> /dev/null
+
+"${HOME}/bin/archscripts/wal-set" --useprev

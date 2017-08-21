@@ -45,7 +45,11 @@ To remove all dotfile symlinks, simply `unlink.sh` with no arguments. If there i
 Dev stack (Universal):
 
 ```
-TODO
+ag                          ➔ text search
+flake8, shellcheck          ➔ linters / style checkers
+pyenv, nvm                  ➔ version management
+tmux                        ➔ terminal multiplexer
+vim, neovim                 ➔ text editors
 ```
 
 Rice stack (Arch):
@@ -57,18 +61,21 @@ compton                     ➔ display compositor
 dunst                       ➔ notifications
 i3lock                      ➔ screen lock
 irssi                       ➔ IRC client
+light                       ➔ backlight control
+maim                        ➔ screenshot
 mpd + mpc + ncmpcpp         ➔ music
-mpv                         ➔ media player
+mpv                         ➔ media player (config in universal/)
 neofetch                    ➔ system information
 polybar (+ libmpdclient)    ➔ status bars
+pywal                       ➔ colors and theming
 ranger + highlight + w3m    ➔ file browser
-redshift                    ➔ screen filter
+redshift                    ➔ screen filter (config in universal/)
 rofi                        ➔ launcher
-scrot, maim                 ➔ screenshot
 sxhkd                       ➔ keybindings
 sxiv                        ➔ image viewer
 urxvt                       ➔ terminal emulator
-wal                         ➔ color theming
 zathura                     ➔ document viewer
 zsh                         ➔ shell
 ```
+
+I still have to work on configuration for `vim`, `neovim`, `irssi`, `zathura`, and `ranger`, using mostly defaults now. These changes will come in time as needed.

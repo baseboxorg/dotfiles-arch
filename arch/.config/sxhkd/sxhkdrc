@@ -80,9 +80,6 @@ XF86MonBrightness{Down,Up}
 # BSPWM
 #
 
-super + f
-    bspc window -t fullscreen
-
 # close or kill
 super + {c,k}
     bspc node -{c,k}

@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# wal-set --useprev will attempt to persist cached colors,
-# which is useful in .xinitrc or if something happens and
-# you just want to reload stuff.
-
 notify-send "[wal-set] init" -t 1
 
 WALLP="${HOME}/Wallpapers/Originals-1920x1080"
@@ -28,7 +24,6 @@ fi
 wal -i "$WALLP" -a 75
 xrdb -merge "${HOME}/.Xresources"
 
-# reload stuff, or start in the case of being called in .xinitrc the first time
 pkill dunst
 pkill polybar
 pkill compton
@@ -37,6 +32,7 @@ pkill compton
 
 bspc config normal_border_color "$color0"
 bspc config focused_border_color "$color5"
+
 dunst \
     -lb "$color0"  \
     -nb "$color0"  \
@@ -45,7 +41,6 @@ dunst \
     -bf "$color15" \
     -cf "#000000"  \
     -nf "$color15" &
-
 polybar top & polybar bottom &
 compton --config "${HOME}/.config/compton/compton.conf" &
 
