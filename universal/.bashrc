@@ -27,3 +27,5 @@ export HISTCONTROL=ignoreboth
 shopt -s cmdhist
 shopt -s histappend
 bind Space:magic-space
+
+source /usr/share/nvm/init-nvm.sh
