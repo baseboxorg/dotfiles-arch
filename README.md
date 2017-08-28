@@ -1,10 +1,9 @@
 # dotfiles
 My personal configuration for Arch development environments (more coming soon).
 
-For server environments (non-graphical; just pure terminal emulator and command line usage), use the much lighter and stripped down [dotfiles-server-arch](https://github.com/JoshuaRLi/dotfiles-server-arch) or [dotfiles-server-debian](https://github.com/JoshuaRLi/dotfiles-server-debian).
+***you are your dotfiles.***
 
-**NOTE:** Arch + universal dotfiles are **not** finalized yet. This repository is a work in progress.
-
+For non-graphical/server environments (just pure terminal emulator and command line usage), use the much lighter and stripped down [dotfiles-server-arch](https://github.com/JoshuaRLi/dotfiles-server-arch) or [dotfiles-server-debian](https://github.com/JoshuaRLi/dotfiles-server-debian).
 
 ### Organization
 

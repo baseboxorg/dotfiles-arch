@@ -100,7 +100,7 @@ archive () {
 
 
 # kills the specified tty.
-killtty() {
+killtty () {
     _require $# 1 "$0 [tty number]" || return 1
     sudo kill "$(who -u | grep "tty${1}" | tr -s ' ' | cut -d ' ' -f 6)"
 }
@@ -150,13 +150,11 @@ hmirror () {
     if ! command -v rsync > /dev/null 2>&1; then
         printf "rsync is not installed.\n" ; return 1
     fi
-    rsync -aAXhP --delete       \
-        --exclude '.cache'      \
-        --exclude '.gnupg'      \
-        --exclude '.ssh'        \
-        --exclude 'bigmedia'    \
+    rsync -aAXhP --delete   \
+        --exclude '.cache'  \
+        --exclude '.gnupg'  \
+        --exclude '.ssh'    \
         "$HOME" "$1"
-    # bigmedia is where isos, scraped music, torrent downloads, etc. are stored
 }
 
 
