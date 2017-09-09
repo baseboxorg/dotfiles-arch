@@ -46,6 +46,7 @@ CLI=(\
 )
 
 DEV=(\
+    editorconfig-vim
     flake8
     neovim
     nvm
@@ -56,7 +57,9 @@ DEV=(\
     shellcheck
     the_silver_searcher
     tmux
-    vim\
+    vim
+    vim-pathogen
+    vim-sensible\
 )
 
 RICE=(\

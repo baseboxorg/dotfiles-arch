@@ -48,7 +48,7 @@ ag                          ➔ text search
 flake8, shellcheck          ➔ linters / style checkers
 pyenv, nvm                  ➔ version management
 tmux                        ➔ terminal multiplexer
-vim, neovim                 ➔ text editors
+vim (sensible, editorcfg)   ➔ text editing
 ```
 
 Rice stack (Arch):
