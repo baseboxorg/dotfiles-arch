@@ -14,6 +14,7 @@ alias lsusb='lsusb -t'
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias serve='python3 -m http.server 8888'
 alias sitemirror='wget -mpkKE -e robots=off'
+alias vi='vim'
 
 # For batch scraping: https://github.com/JoshuaRLi/ytmcd
 alias ytm='youtube-dl   \
@@ -43,7 +44,7 @@ alias po='popd'
 alias pu='pushd'
 alias q='exit'
 alias rd='rmdir'
-alias rip='rm -rf'
+alias rip='trash-put'
 alias tailf='tail -f -n 50'
 
 # Fancier git aliases are in ~/.gitconfig.
@@ -88,7 +89,8 @@ alias pipu='p3 -m pip uninstall'
 alias venva='source ./venv/bin/activate'
 alias venvd='deactivate'
 
-# TODO node.js
+alias ni='npm install'
+alias nig='npm install -g'
 
 alias tn='tmux new-session -s'
 alias ta='tmux attach -t'

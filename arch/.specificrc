@@ -7,9 +7,12 @@ alias pacup='pacaur --noedit --noconfirm -Syu'
 alias pacclean='sudo pacman -Rns $(pacman -Qtdq)'
 
 alias imgv='sxiv -t -r'
-alias toss='trash-put'
 
 # print 16-color palette.
 palette () {
     (x=`tput op` y=`printf %76s`;for i in {0..15};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done)
 }
+
+# Activate nvm using the installed script from the nvm Arch repo.
+# Deteriorates shell startup time, so comment out whenever possible.
+# source /usr/share/nvm/init-nvm.sh
