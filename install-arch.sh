@@ -1,6 +1,4 @@
-#!/bin/bash
-
-set -e
+#!/usr/bin/env bash
 
 HERE="$(dirname "$(readlink -f "$0")")"
 TMP="$(mktemp -d)"
