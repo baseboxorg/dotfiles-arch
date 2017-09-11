@@ -1,4 +1,0 @@
-. "${HOME}/.commonexports"
-. "${HOME}/.commonaliases"
-. "${HOME}/.commonfunc"
-. "${HOME}/.specificrc"
