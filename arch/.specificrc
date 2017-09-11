@@ -1,3 +1,12 @@
+# NOTE: All .common* dotfiles must be sourced before this.
+
+pathprepend "${HOME}/bin/archscripts"
+
+# Activate nvm using the installed script from the nvm Arch repo.
+# Deteriorates shell startup time, so comment out whenever possible.
+# source /usr/share/nvm/init-nvm.sh
+
+alias imgv='sxiv -t -r'
 alias pacs='pacaur -Ss'
 alias paci='pacaur --noedit -S'
 alias pacrm='pacaur -Rs'
@@ -6,13 +15,78 @@ alias pacch='checkupdates && pacaur -k'
 alias pacup='pacaur --noedit --noconfirm -Syu'
 alias pacclean='sudo pacman -Rns $(pacman -Qtdq)'
 
-alias imgv='sxiv -t -r'
-
 # print 16-color palette.
 palette () {
     (x=`tput op` y=`printf %76s`;for i in {0..15};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done)
 }
 
-# Activate nvm using the installed script from the nvm Arch repo.
-# Deteriorates shell startup time, so comment out whenever possible.
-# source /usr/share/nvm/init-nvm.sh
+
+# kills the specified tty.
+killtty () {
+    _require $# 1 "$0 [tty number]" || return 1
+    sudo kill "$(who -u | grep "tty${1}" | tr -s ' ' | cut -d ' ' -f 6)"
+}
+
+
+# unlocks LUKS-encrypted drives and mounts at /tmp/ALIAS.
+unlock () {
+    _require $# 2 "$0 [path/to/device] [mapper alias]" || return 1
+    if ! command -v cryptsetup > /dev/null 2>&1; then
+        printf "cryptsetup is not installed.\n" ; return 1
+    fi
+    MOUNTPOINT="/tmp/${2}"
+    if ! mkdir "$MOUNTPOINT"; then
+        printf "Choose a different /dev/mapper/ alias.\n" ; return 1
+    fi
+    sudo cryptsetup luksOpen "$1" "$2" && \
+    sudo mount -v "/dev/mapper/${2}" "$MOUNTPOINT"
+}
+
+
+# unmounts from /tmp/ALIAS and locks LUKS-encrypted drives.
+lock () {
+    _require $# 1 "$0 [MAPPER ALIAS]" || return 1
+    if ! command -v cryptsetup > /dev/null 2>&1; then
+        printf "cryptsetup is not installed.\n" ; return 1
+    fi
+    cd "$HOME"                      && \
+    sudo umount -v "/tmp/${1}"      && \
+    sudo cryptsetup luksClose "$1"  && \
+    sudo rmdir "/tmp/${1}"
+}
+
+
+# rsync flag wrapper for backup and sync.
+rmirror () {
+    _require $# 2 "$0 [/path/to/source/dir] [/path/to/dest/dir]" || return 1
+    if ! command -v rsync > /dev/null 2>&1; then
+        printf "rsync is not installed.\n" ; return 1
+    fi
+    rsync -aAXhP --delete "$1" "$2"  # reflect deleted file changes in the destination
+}
+
+
+# special rsync shortcut for home backups.
+hmirror () {
+    _require $# 1 "$0 [/path/to/backup/dir]" || return 1
+    if ! command -v rsync > /dev/null 2>&1; then
+        printf "rsync is not installed.\n" ; return 1
+    fi
+    rsync -aAXhP --delete   \
+        --exclude '.cache'  \
+        --exclude '.gnupg'  \
+        --exclude '.ssh'    \
+        "$HOME" "$1"
+}
+
+
+# special rsync shortcut for system backups.
+smirror () {
+    _require $# 1 "$0 [/path/to/backup/dir]" || return 1
+    if ! command -v rsync > /dev/null 2>&1; then
+        printf "rsync is not installed.\n" ; return 1
+    fi
+    sudo rsync -aAXhP --delete \
+        --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/home/*","/lost+found"} \
+        "/" "$1"
+}
