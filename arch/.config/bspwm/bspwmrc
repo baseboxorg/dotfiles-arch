@@ -1,6 +1,6 @@
 #!/bin/sh
 
-bspc monitor -d I II III IV V VI VII VIII IX
+bspc monitor -d I II III IV V
 
 bspc config border_width           2
 bspc config window_gap             12
@@ -17,6 +17,7 @@ bspc config paddingless_monocle    true
 bspc config focus_follows_pointer  true
 bspc config pointer_follows_focus  false
 
+bspc rule -a sxiv state=tiled
 bspc rule -a Zathura state=tiled
 # bspc rule -a URxvt:cava focus=off desktop=^1 private=on locked=on floating=on sticky=on
 # urxvtc -name cava -e cava &> /dev/null
