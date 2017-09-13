@@ -23,7 +23,7 @@ ctrl + alt + Delete
 
 # TODO fix sh environment issues, have to manually source for now
 shift + Return
-    . ~/.commonexports ; rofi -show run
+    . ~/.commonexports && . ~/.specificrc && rofi -show run
 
 alt + Return
     rofi -show ssh
@@ -34,6 +34,7 @@ ctrl + shift + Return
 # TODO fix sh environment issues, have to manually source for now
 super + w
     . ~/.commonexports && \
+    . ~/.specificrc && \
     WS="${HOME}/bin/archscripts/wal-set" && \
     $WS $(shuf <($WS list) | head -n 1)
 
