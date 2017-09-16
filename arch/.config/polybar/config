@@ -39,7 +39,7 @@ font-3 = "Source Han Sans:size=10;2"
 
 modules-left = bspwm
 modules-center = xwindow
-modules-right = network separator memory separator cpu separator date
+modules-right = network memory cpu date
 
 
 [bar/bottom]
@@ -58,13 +58,7 @@ font-3 = "Source Han Sans:size=10;2"
 
 tray-position = left
 modules-center = mpdcurrentsong
-modules-right = volume separator filesystem separator battery
-
-
-[module/separator]
-type = custom/text
-content = |
-content-foreground = ${colors.lbg2}
+modules-right = volume filesystem battery
 
 
 [module/xwindow]

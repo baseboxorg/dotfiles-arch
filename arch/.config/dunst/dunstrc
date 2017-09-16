@@ -18,7 +18,6 @@
     separator_color = auto
     startup_notification = false
     show_indicators = yes
-    browser = /usr/bin/chromium
 
 [shortcuts]
     close = ctrl+space
